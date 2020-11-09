@@ -19,49 +19,49 @@
       // console.log(promise);
 
       promise
+        // .then(
+        //   (value) => {
+        //     console.log("111success", value);
+        //     return 222;
+        //   }
+        //   // (reason) => {
+        //   //   throw reason;
+        //   // }
+        // )
+        // .catch((reason) => {
+        //   console.log("111error", reason);
+        // })
+        // // .then(undefined, (reason) => {
+        // //   console.log("111error", reason);
+        // // })
+        // .then((value) => {
+        //   console.log("222success", value);
+        // })
+        // .catch((reason) => {
+        //   console.log("222error", reason);
+        // });
         .then(
           (value) => {
             console.log("111success", value);
-            return 222;
-          }
-          // (reason) => {
-          //   throw reason;
-          // }
-        )
-        .catch((reason) => {
-          console.log("111error", reason);
-        })
-        // .then(undefined, (reason) => {
-        //   console.log("111error", reason);
-        // })
-        .then((value) => {
-          console.log("222success", value);
-        })
-        .catch((reason) => {
-          console.log("222error", reason);
-        });
-      // .then(
-      //   (value) => {
-      //     console.log("111success", value);
 
-      //     // throw 222;
-      //     // return 222;
-      //     return new MyPromise((resolve, reject) => {
-      //       resolve(333);
-      //     });
-      //   },
-      //   (reason) => {
-      //     console.log("111error", reason);
-      //   }
-      // )
-      // .then(
-      //   (value) => {
-      //     console.log("222success", value);
-      //   },
-      //   (reason) => {
-      //     console.log("222error", reason);
-      //   }
-      // );
+            // throw 222;
+            // return 222;
+            return new MyPromise((resolve, reject) => {
+              resolve(333);
+            });
+          },
+          (reason) => {
+            console.log("111error", reason);
+          }
+        )
+        .then(
+          (value) => {
+            console.log("222success", value);
+          },
+          (reason) => {
+            console.log("222error", reason);
+          }
+        );
     </script>
   </body>
 </html>

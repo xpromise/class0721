@@ -76,7 +76,7 @@
             throw reason;
           };
 
-    // 为了catch方法，不传第一个回调服务
+    // 为了catch方法不传第一个回调服务
     onResolved =
       typeof onResolved === "function" ? onResolved : (value) => value;
 
