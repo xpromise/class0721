@@ -36,18 +36,23 @@
       console.log(111);
 
       const promise = new Promise((resolve, reject) => {
-        resolve();
+        // resolve("success");
+        setTimeout(() => {
+          resolve("success");
+        }, 2000)
         // 同步调用
         console.log(222);
       });
 
-      promise
-        .then(() => {
-          console.log(444);
-        })
-        .catch(() => {
-          console.log(555);
-        });
+      // promise.then(
+      //   (value) => {
+      //     console.log(444);
+      //   },
+      //   (reason) => {}
+      // );
+      // .catch((reason) => {
+      //   console.log(555);
+      // });
 
       console.log(333);
     </script>

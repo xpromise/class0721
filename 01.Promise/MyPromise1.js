@@ -26,49 +26,24 @@
     // 初始化promise对象是pending状态
     // _开头的属性是私有属性，外界不允许操作
     that._status = "pending";
-    that._result = undefined;
-    // 用来存储成功、失败回调函数的容器
-    that._callbacks = {};
 
-    // debugger;
-
-    function resolve(value) {
+    // 将promise对象状态改成成功状态resolved
+    function resolve() {
       // 让promise对象状态只能修改一次
       if (that._status !== "pending") return;
-      // 将promise对象状态改成成功状态resolved
       that._status = "resolved";
-      this._result = value;
-      // 触发/调用 onResolved 函数
-      setTimeout(function () {
-        // 异步调用 setTimeout
-        // that._callbacks.onResolved && that._callbacks.onResolved(value);
-        // 新的运算符 ?. 可选链
-        that._callbacks.onResolved?.(value);
-      }, 0);
     }
 
     // 将promise对象状态改成失败状态rejected
-    function reject(reason) {
+    function reject() {
       // 让promise对象状态只能修改一次
       if (that._status !== "pending") return;
       that._status = "rejected";
-      this._result = reason;
-      // 触发/调用 onRejected 函数
-      setTimeout(function () {
-        that._callbacks.onRejected?.(reason);
-      }, 0);
     }
 
     // 同步调用
     executor(resolve, reject);
   }
-
-  MyPromise.prototype.then = function (onResolved, onRejected) {
-    // this指向实例对象promise
-    // 将成功、失败回调添加容器中（注意：没有调用）
-    this._callbacks.onResolved = onResolved;
-    this._callbacks.onRejected = onRejected;
-  };
 
   w.MyPromise = MyPromise;
 })(window);
