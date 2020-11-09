@@ -31,8 +31,6 @@
     // 用来存储成功、失败回调函数的容器
     that._callbacks = {};
 
-    // that.__my_promise__ = true;
-
     // debugger;
 
     function resolve(value) {
@@ -40,7 +38,7 @@
       if (that._status !== "pending") return;
       // 将promise对象状态改成成功状态resolved
       that._status = "resolved";
-      that._result = value;
+      this._result = value;
       // 触发/调用 onResolved 函数
       setTimeout(function () {
         // 异步调用 setTimeout
@@ -55,7 +53,7 @@
       // 让promise对象状态只能修改一次
       if (that._status !== "pending") return;
       that._status = "rejected";
-      that._result = reason;
+      this._result = reason;
       // 触发/调用 onRejected 函数
       setTimeout(function () {
         that._callbacks.onRejected?.(reason);
@@ -68,37 +66,9 @@
 
   MyPromise.prototype.then = function (onResolved, onRejected) {
     // this指向实例对象promise
-    const that = this;
-
-    // 返回新的promise对象 --> 为了链式调用
-    return new MyPromise(function (resolve, reject) {
-      // 状态怎么改变？
-      // 什么场景要调用resolve，什么场景要调用reject
-      /*
-        then返回值是一个新的promise1对象，
-            他的状态看里面函数调用的返回值：
-              如果返回值是一个promise2对象，那么这个promise2的状态是什么，promise1的状态就是什么
-              如果返回值不是promise对象，或者没有返回值，那么promise1对象默认是成功状态
-              如果函数调用报错了，那么promise1对象就会是失败状态
-      */
-
-      // 需求：得到onResolved、onRejected函数调用的返回值
-      // 将成功、失败回调添加容器中（注意：没有调用）
-      that._callbacks.onResolved = function () {
-        // result函数返回值
-        const result = onResolved();
-        // 判断返回值是否是promise对象
-        if (result instanceof MyPromise) {
-          // 返回值是一个promise对象
-          // result.then(() => { resolve() }, () => { reject() })
-          result.then(resolve, reject);
-        } else {
-          // 返回值不是promise对象 - 返回成功状态
-          resolve();
-        }
-      };
-      that._callbacks.onRejected = onRejected;
-    });
+    // 将成功、失败回调添加容器中（注意：没有调用）
+    this._callbacks.onResolved = onResolved;
+    this._callbacks.onRejected = onRejected;
   };
 
   w.MyPromise = MyPromise;

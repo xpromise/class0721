@@ -17,14 +17,23 @@
       // console.log(333);
       // console.log(promise);
 
-      promise.then(
-        (value) => {
-          console.log("success", value);
-        },
-        (reason) => {
-          console.log("error", reason);
-        }
-      );
+      promise
+        .then(
+          (value) => {
+            console.log("success", value);
+          },
+          (reason) => {
+            console.log("error", reason);
+          }
+        )
+        .then(
+          (value) => {
+            console.log("success", value);
+          },
+          (reason) => {
+            console.log("error", reason);
+          }
+        );
     </script>
   </body>
 </html>

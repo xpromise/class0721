@@ -33,28 +33,48 @@
           等传入promise对象状态都发生变化时，会返回一个成功的promise
     */
 
-      console.log(111);
+      // console.log(111);
 
       const promise = new Promise((resolve, reject) => {
         // resolve("success");
         setTimeout(() => {
-          resolve("success");
-        }, 2000)
+          resolve(111);
+        }, 2000);
         // 同步调用
-        console.log(222);
+        // console.log(222);
       });
 
-      // promise.then(
-      //   (value) => {
-      //     console.log(444);
-      //   },
-      //   (reason) => {}
-      // );
-      // .catch((reason) => {
-      //   console.log(555);
-      // });
+      promise
+        /*
+          then返回值是一个新的promise1对象，
+            他的状态看里面函数调用的返回值：
+              如果返回值是一个promise2对象，那么这个promise2的状态是什么，promise1的状态就是什么
+              如果返回值不是promise对象，或者没有返回值，那么promise1对象默认是成功状态
+              如果函数调用报错了，那么promise1对象就会是失败状态
+        */
+        .then(
+          (value) => {
+            console.log("111success", value);
 
-      console.log(333);
+            throw new Error("错误");
+            // return {};
+            // return new Promise((resolve) => {
+            //   reject();
+            // });
+          },
+          (reason) => {
+            console.log("111error", reason);
+          }
+        )
+        .then(
+          (value) => {
+            console.log("222success", value);
+          },
+          (reason) => {
+            console.log("222error", reason);
+          }
+        );
+      // console.log(333);
     </script>
   </body>
 </html>
