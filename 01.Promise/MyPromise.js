@@ -33,8 +33,6 @@
 
     // that.__my_promise__ = true;
 
-    // debugger;
-
     function resolve(value) {
       // 让promise对象状态只能修改一次
       if (that._status !== "pending") return;
@@ -85,18 +83,25 @@
       // 需求：得到onResolved、onRejected函数调用的返回值
       // 将成功、失败回调添加容器中（注意：没有调用）
       that._callbacks.onResolved = function () {
-        // result函数返回值
-        const result = onResolved();
-        // 判断返回值是否是promise对象
-        if (result instanceof MyPromise) {
-          // 返回值是一个promise对象
-          // result.then(() => { resolve() }, () => { reject() })
-          result.then(resolve, reject);
-        } else {
-          // 返回值不是promise对象 - 返回成功状态
-          resolve();
+        try {
+          // 放置可能出错代码
+          // result函数返回值
+          const result = onResolved();
+          // 判断返回值是否是promise对象
+          if (result instanceof MyPromise) {
+            // 返回值是一个promise对象
+            // result.then(() => { resolve() }, () => { reject() })
+            result.then(resolve, reject);
+          } else {
+            // 返回值不是promise对象 - 返回成功状态
+            resolve();
+          }
+        } catch (e) {
+          // onResolved方法报错了
+          reject();
         }
       };
+
       that._callbacks.onRejected = onRejected;
     });
   };

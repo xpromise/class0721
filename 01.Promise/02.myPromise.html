@@ -20,18 +20,24 @@
       promise
         .then(
           (value) => {
-            console.log("success", value);
+            console.log("111success", value);
+
+            // throw 111;
+            // return {};
+            // return new MyPromise((resolve, reject) => {
+            //   reject();
+            // });
           },
           (reason) => {
-            console.log("error", reason);
+            console.log("111error", reason);
           }
         )
         .then(
           (value) => {
-            console.log("success", value);
+            console.log("222success", value);
           },
           (reason) => {
-            console.log("error", reason);
+            console.log("222error", reason);
           }
         );
     </script>
