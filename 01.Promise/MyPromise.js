@@ -68,6 +68,18 @@
     // this指向实例对象promise
     const that = this;
 
+    // 为了then方法不传第二个函数（失败回调）服务
+    onRejected =
+      typeof onRejected === "function"
+        ? onRejected
+        : (reason) => {
+            throw reason;
+          };
+
+    // 为了catch方法，不传第一个回调服务
+    onResolved =
+      typeof onResolved === "function" ? onResolved : (value) => value;
+
     // 返回新的promise对象 --> 为了链式调用
     return new MyPromise(function (resolve, reject) {
       // 状态怎么改变？
@@ -82,11 +94,39 @@
 
       // 需求：得到onResolved、onRejected函数调用的返回值
       // 将成功、失败回调添加容器中（注意：没有调用）
-      that._callbacks.onResolved = function () {
+      that._callbacks.onResolved = function (value) {
         try {
           // 放置可能出错代码
           // result函数返回值
-          const result = onResolved();
+          const result = onResolved(value);
+          // 判断返回值是否是promise对象
+          if (result instanceof MyPromise) {
+            // 返回值是一个promise对象
+            // result.then(
+            //   (value) => {
+            //     resolve(value);
+            //   },
+            //   (reason) => {
+            //     reject(reason);
+            //   }
+            // );
+            result.then(resolve, reject);
+          } else {
+            // 返回值不是promise对象 - 返回成功状态
+            resolve(result);
+          }
+        } catch (e) {
+          // error 失败的原因
+          // onResolved方法报错了
+          reject(e);
+        }
+      };
+
+      that._callbacks.onRejected = function (reason) {
+        try {
+          // 放置可能出错代码
+          // result函数返回值
+          const result = onRejected(reason);
           // 判断返回值是否是promise对象
           if (result instanceof MyPromise) {
             // 返回值是一个promise对象
@@ -94,17 +134,25 @@
             result.then(resolve, reject);
           } else {
             // 返回值不是promise对象 - 返回成功状态
-            resolve();
+            resolve(result);
           }
         } catch (e) {
-          // onResolved方法报错了
-          reject();
+          // onRejected方法报错了
+          reject(e);
         }
       };
-
-      that._callbacks.onRejected = onRejected;
     });
   };
+
+  MyPromise.prototype.catch = function (onRejected) {
+    return this.then(undefined, onRejected);
+  };
+
+  MyPromise.resolve = function () {};
+  MyPromise.reject = function () {};
+
+  MyPromise.all = function () {};
+  MyPromise.allSetteld = function () {};
 
   w.MyPromise = MyPromise;
 })(window);
