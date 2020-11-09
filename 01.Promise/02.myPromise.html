@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyPromise</title>
+  </head>
+  <body>
+    <script src="./MyPromise.js"></script>
+    <script>
+      console.log(111);
+      const promise = new MyPromise((resolve, reject) => {
+        console.log(222);
+        resolve();
+        reject();
+      });
+      console.log(333);
+      console.log(promise);
+    </script>
+  </body>
+</html>

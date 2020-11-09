@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      1. 是什么？
+        解决异步回调地狱的方案
+      2. 如何创建promise对象
+        new Promise((resolve, reject) => {})  
+          默认状态是pending状态
+          调用resolve会改成 resolved / fulfilled 状态
+          调用reject会改成 rejected 状态  
+          注意：状态只能修改一次
+
+          调用resolve、reject可以传参，传入的参数就会作为promise对象的结果值
+      
+          通过 then / catch 来捕获promise对象的状态，看到底是成功还是失败
+            成功会触发then方法的第一个回调函数
+            失败会触发catch方法/then方法的第二个回调函数
+              这些回调函数就能接收到之前resolve、reject传递结果值
+
+        Promise.resolve() 创建成功、失败的promise
+        Promise.reject()  创建失败的Promise
+        Promise.all([promise1, promise2, ]) 
+          等传入promise对象都成功才返回成功的promise， 
+          只要有一个失败，就返回失败的promise， 
+        Promise.allSettled([promise1, promise2, ])   
+          等传入promise对象状态都发生变化时，会返回一个成功的promise
+    */
+
+      console.log(111);
+
+      const promise = new Promise((resolve, reject) => {
+        resolve();
+        // 同步调用
+        console.log(222);
+      });
+
+      promise
+        .then(() => {
+          console.log(444);
+        })
+        .catch(() => {
+          console.log(555);
+        });
+
+      console.log(333);
+    </script>
+  </body>
+</html>
