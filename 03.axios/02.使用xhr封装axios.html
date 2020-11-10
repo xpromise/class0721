@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <button id="btn1">按钮1</button>
+    <button id="btn2">按钮2</button>
+    <script>
+      // document.getElementById("btn").onclick = function () {
+      //   // 1. 创建xhr对象
+      //   const xhr = new XMLHttpRequest();
+      //   // 2. 绑定onreadystatechange事件
+      //   // 当readystate发生变化时触发的事件
+      //   xhr.onreadystatechange = function () {
+      //     console.log(xhr.readyState);
+      //     if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+      //       console.log(JSON.parse(xhr.responseText)); // json
+      //       // console.log(xhr.responseXML); // xml
+      //       console.log(xhr);
+      //     }
+      //   };
+      //   // 3. 设置请求信息（请求地址、请求方法。。。）
+      //   xhr.open("GET", "http://localhost:3000/posts");
+      //   // 4. 发送请求
+      //   xhr.send();
+      // };
+
+      function axios({
+        method, // 请求方式
+        url, // 请求地址
+        data, // 请求体参数 body
+        params, // querystring 查询字符串参数
+      }) {
+        return new Promise((resolve, reject) => {
+          method = method.toUpperCase();
+          // 1. 创建xhr对象
+          const xhr = new XMLHttpRequest();
+          // 2. 绑定onreadystatechange事件
+          // 当readystate发生变化时触发的事件
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              // 响应返回了（但是成功、失败不知道）
+              if (xhr.status >= 200 && xhr.status < 300) {
+                // 响应成功
+                const response = {
+                  request: xhr,
+                  status: xhr.status,
+                  data: JSON.parse(xhr.responseText),
+                };
+                resolve(response);
+              } else {
+                // 响应失败
+                console.log("error", xhr);
+                reject("error");
+              }
+            }
+          };
+          /*
+            通常情况下：
+              GET、DELETE请求，只会有查询字符串参数
+              POST、PUT、PATCH请求，既可以有请求体参数，也可以有查询字符串参数
+            params: { name: 'jack', age: 18 } 
+              --> url?name=jack&age=18
+          */
+          let qs = "";
+          if (params) {
+            // 提取params中所有属性名成为一个数组
+            // ['name', 'age']
+            qs = Object.keys(params)
+              .reduce((p, key) => {
+                const value = params[key];
+                return p + `${key}=${value}&`;
+              }, "?")
+              .slice(0, -1);
+          }
+
+          // 3. 设置请求信息（请求地址、请求方法。。。）
+          xhr.open(method, url + qs);
+
+          let body = "";
+          if (
+            (method === "POST" || method === "PUT" || method === "PATCH") &&
+            data
+          ) {
+            // 设置请求头
+            xhr.setRequestHeader("content-type", "application/json");
+            body = JSON.stringify(data);
+          }
+          // 4. 发送请求
+          xhr.send(body);
+        });
+      }
+
+      btn1.onclick = function () {
+        // 发送GET请求
+
+        axios({
+          method: "GET",
+          url: "http://localhost:3000/comments",
+        })
+          .then((value) => {
+            // 200-299
+            console.log("value", value);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+
+      btn2.onclick = function () {
+        // 发送POST请求
+
+        axios({
+          method: "POST",
+          url: "http://localhost:3000/comments",
+          data: {
+            // 请求体参数 body
+            body: "i like laoluo",
+            postId: 3,
+          },
+        })
+          .then((value) => {
+            // 200-299
+            console.log("value", value);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+    </script>
+  </body>
+</html>
