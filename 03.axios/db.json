@@ -1,0 +1,64 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "title": "react",
+      "author": "facebook",
+      "id": 3
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "body": "i like jingge",
+      "postId": 3,
+      "id": 2
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 3
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 4
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 5
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 6
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 7
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 8
+    },
+    {
+      "body": "i like peihua",
+      "postId": 3,
+      "id": 9
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

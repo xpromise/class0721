@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <button id="btn1">GET</button>
+    <button id="btn2">POST</button>
+    <button id="btn3">PUT</button>
+    <button id="btn4">PATCH</button>
+    <button id="btn5">DELETE</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <script>
+      const btn1 = document.getElementById("btn1");
+      const btn2 = document.getElementById("btn2");
+      const btn3 = document.getElementById("btn3");
+      const btn4 = document.getElementById("btn4");
+      const btn5 = document.getElementById("btn5");
+
+      btn1.onclick = function () {
+        // 发送GET请求
+
+        axios({
+          method: "GET",
+          url: "http://localhost:3000/comments",
+        })
+          // axios
+          //   .get("http://localhost:3000/comments")
+          .then((value) => {
+            // 200-299
+            console.log("value", value.data);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+
+      btn2.onclick = function () {
+        // 发送POST请求
+
+        axios({
+          method: "POST",
+          url: "http://localhost:3000/comments",
+          data: {
+            // 请求体参数 body
+            body: "i like peihua",
+            postId: 3,
+          },
+        })
+          // axios
+          //   .get("http://localhost:3000/comments")
+          .then((value) => {
+            // 200-299
+            console.log("value", value.data);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+
+      btn4.onclick = function () {
+        // 发送PATCH请求
+
+        axios({
+          method: "PATCH",
+          url: "http://localhost:3000/comments/2",
+          data: {
+            // 请求体参数 body
+            body: "i like jingge",
+          },
+        })
+          // axios
+          //   .get("http://localhost:3000/comments")
+          .then((value) => {
+            // 200-299
+            console.log("value", value.data);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+    </script>
+  </body>
+</html>
