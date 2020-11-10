@@ -199,7 +199,47 @@
     });
   };
 
-  MyPromise.allSetteld = function () {};
+  MyPromise.allSetteld = function (promises) {
+    return new MyPromise((resolve) => {
+      const result = [];
+      let completedNum = 0;
+      const total = promises.length;
+
+      promises.forEach((item, index) => {
+        if (item instanceof MyPromise) {
+          item.then(
+            (value) => {
+              result[index] = {
+                status: "resolved",
+                value,
+              };
+              resolveAllPromise();
+            },
+            (reason) => {
+              result[index] = {
+                status: "rejected",
+                reason,
+              };
+              resolveAllPromise();
+            }
+          );
+        } else {
+          result[index] = {
+            status: "resolved",
+            value: item,
+          };
+          resolveAllPromise();
+        }
+      });
+
+      function resolveAllPromise() {
+        completedNum++;
+        if (completedNum === total) {
+          resolve(result);
+        }
+      }
+    });
+  };
 
   w.MyPromise = MyPromise;
 })(window);

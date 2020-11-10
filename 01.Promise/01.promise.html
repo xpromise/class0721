@@ -106,13 +106,21 @@
         }, 2000);
       });
 
-      Promise.all([a, b, a, {}])
+      Promise.allSettled([a, b, 222, {}])
         .then((value) => {
           console.log("success", value);
         })
         .catch((reason) => {
           console.log("error", reason);
         });
+
+      // Promise.all([a, b, a, {}])
+      //   .then((value) => {
+      //     console.log("success", value);
+      //   })
+      //   .catch((reason) => {
+      //     console.log("error", reason);
+      //   });
 
       // console.log(p);
     </script>
