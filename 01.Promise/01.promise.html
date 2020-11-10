@@ -75,6 +75,46 @@
           }
         );
       // console.log(333);
+
+      // const p = Promise.resolve(111);
+
+      // const p = Promise.resolve(
+      //   new Promise((resolve, reject) => {
+      //     // resolve(111);
+      //     reject(111);
+      //   })
+      // );
+
+      // const p = Promise.reject(
+      //   new Promise((resolve, reject) => {
+      //     resolve(111);
+      //     // reject(111);
+      //   })
+      //   // 111
+      // );
+
+      const a = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // resolve("aaa");
+          reject("aaa");
+        }, 1000);
+      });
+
+      const b = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("bbb");
+        }, 2000);
+      });
+
+      Promise.all([a, b, a, {}])
+        .then((value) => {
+          console.log("success", value);
+        })
+        .catch((reason) => {
+          console.log("error", reason);
+        });
+
+      // console.log(p);
     </script>
   </body>
 </html>

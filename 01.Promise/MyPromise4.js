@@ -152,6 +152,7 @@
     const that = this;
 
     return new MyPromise(function (resolve, reject) {
+      
       that._callbacks.onResolved = function (value) {
         try {
           const result = onResolved(value);

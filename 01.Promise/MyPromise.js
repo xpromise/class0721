@@ -68,6 +68,7 @@
     // this指向实例对象promise
     const that = this;
 
+    // then方法只传一个回调，当接收到失败的promise时，将失败promise往下传递（返回值也是失败的，且结果值与其一致）
     // 为了then方法不传第二个函数（失败回调）服务
     onRejected =
       typeof onRejected === "function"
@@ -76,6 +77,7 @@
             throw reason;
           };
 
+    // catch方法，当接收到成功的promise时，将成功promise往下传递（返回值也是成功的，且结果值与其一致）
     // 为了catch方法不传第一个回调服务
     onResolved =
       typeof onResolved === "function" ? onResolved : (value) => value;
@@ -148,10 +150,55 @@
     return this.then(undefined, onRejected);
   };
 
-  MyPromise.resolve = function () {};
-  MyPromise.reject = function () {};
+  MyPromise.resolve = function (value) {
+    if (value instanceof MyPromise) {
+      return value;
+    } else {
+      return new MyPromise((resolve) => resolve(value));
+    }
+  };
 
-  MyPromise.all = function () {};
+  MyPromise.reject = function (reason) {
+    return new MyPromise((resolve, reject) => reject(reason));
+  };
+
+  MyPromise.all = function (promises) {
+    return new MyPromise((resolve, reject) => {
+      // 成功结果值数组
+      const result = [];
+      // 接受数组的长度
+      const total = promises.length;
+      // 已完成数量
+      let completedNum = 0;
+
+      promises.forEach((item, index) => {
+        // 判断item是否是promise
+        // 是 判断promise的状态，通过then
+        // 不是 就当做成功的promise使用
+        if (item instanceof MyPromise) {
+          // item.then((value) => {}, (reason) => {
+          //   reject(reason)
+          // })
+          item.then((value) => {
+            // 不行：问题就是result结果值顺序不对
+            // result.push(value)
+            resolveAllPromise(index, value);
+          }, reject);
+        } else {
+          resolveAllPromise(index, item);
+        }
+      });
+
+      function resolveAllPromise(index, value) {
+        result[index] = value;
+        completedNum++;
+        if (total === completedNum) {
+          resolve(result);
+        }
+      }
+    });
+  };
+
   MyPromise.allSetteld = function () {};
 
   w.MyPromise = MyPromise;

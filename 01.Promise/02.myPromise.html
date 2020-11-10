@@ -12,56 +12,88 @@
       // console.log(111);
       const promise = new MyPromise((resolve, reject) => {
         // console.log(222);
-        resolve(111);
-        // reject(111);
+        // resolve(111);
+        reject(111);
       });
       // console.log(333);
       // console.log(promise);
 
       promise
-        // .then(
-        //   (value) => {
-        //     console.log("111success", value);
-        //     return 222;
-        //   }
-        //   // (reason) => {
-        //   //   throw reason;
-        //   // }
-        // )
-        // .catch((reason) => {
-        //   console.log("111error", reason);
-        // })
-        // // .then(undefined, (reason) => {
-        // //   console.log("111error", reason);
-        // // })
-        // .then((value) => {
-        //   console.log("222success", value);
-        // })
-        // .catch((reason) => {
-        //   console.log("222error", reason);
-        // });
+
         .then(
           (value) => {
             console.log("111success", value);
-
-            // throw 222;
-            // return 222;
-            return new MyPromise((resolve, reject) => {
-              resolve(333);
-            });
-          },
-          (reason) => {
-            console.log("111error", reason);
+            return 222;
           }
+          // (reason) => {
+          //   throw reason;
+          // }
         )
-        .then(
-          (value) => {
-            console.log("222success", value);
-          },
-          (reason) => {
-            console.log("222error", reason);
-          }
-        );
+        .catch((reason) => {
+          console.log("111error", reason);
+        })
+        // .then(undefined, (reason) => {
+        //   console.log("111error", reason);
+        // })
+        .then((value) => {
+          console.log("222success", value);
+        })
+        .catch((reason) => {
+          console.log("222error", reason);
+        });
+      // .then(
+      //   (value) => {
+      //     console.log("111success", value);
+
+      //     // throw 222;
+      //     // return 222;
+      //     return new MyPromise((resolve, reject) => {
+      //       resolve(333);
+      //     });
+      //   },
+      //   (reason) => {
+      //     console.log("111error", reason);
+      //   }
+      // )
+      // .then(
+      //   (value) => {
+      //     console.log("222success", value);
+      //   },
+      //   (reason) => {
+      //     console.log("222error", reason);
+      //   }
+      // );
+
+      // const p = MyPromise.resolve(111);
+
+      // const p = MyPromise.resolve(
+      //   new MyPromise((resolve, reject) => {
+      //     // resolve(111);
+      //     // reject(111);
+      //   })
+      // );
+      // console.log(p);
+
+      const a = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          // resolve("aaa");
+          reject("aaa");
+        }, 1000);
+      });
+
+      const b = new MyPromise((resolve) => {
+        setTimeout(() => {
+          resolve("bbb");
+        }, 2000);
+      });
+
+      MyPromise.all([a, b, 222, {}])
+        .then((value) => {
+          console.log("success", value);
+        })
+        .catch((reason) => {
+          console.log("error", reason);
+        });
     </script>
   </body>
 </html>
