@@ -60,6 +60,29 @@
           });
       };
 
+      btn3.onclick = function () {
+        // 发送PUT请求
+
+        axios({
+          method: "PUT",
+          url: "http://localhost:3000/comments/2",
+          data: {
+            // 请求体参数 body
+            body: "i like jingge",
+            postId: 1,
+          },
+        })
+          // axios
+          //   .get("http://localhost:3000/comments")
+          .then((value) => {
+            // 200-299
+            console.log("value", value.data);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+
       btn4.onclick = function () {
         // 发送PATCH请求
 
@@ -70,6 +93,24 @@
             // 请求体参数 body
             body: "i like jingge",
           },
+        })
+          // axios
+          //   .get("http://localhost:3000/comments")
+          .then((value) => {
+            // 200-299
+            console.log("value", value.data);
+          })
+          .catch((reason) => {
+            console.log("reason", reason);
+          });
+      };
+
+      btn5.onclick = function () {
+        // 发送DELETE请求
+
+        axios({
+          method: "DELETE",
+          url: "http://localhost:3000/comments/3",
         })
           // axios
           //   .get("http://localhost:3000/comments")
