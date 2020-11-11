@@ -249,6 +249,8 @@ function forEach(obj, fn) {
   } else {
     // Iterate over object keys
     for (var key in obj) {
+      // 检查属性key是否是obj对象的直接属性
+      // 目的：过滤原型属性（原型属性不处理）
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         fn.call(null, obj[key], key, obj);
       }
@@ -302,8 +304,15 @@ function merge(/* obj1, obj2, obj3, ... */) {
  * @return {Object} The resulting value of object a
  */
 function extend(a, b, thisArg) {
+  // a  axios/instance
+  // b  Axios.prototype
+  // thisArg  context(Axios实例对象)
   forEach(b, function assignValue(val, key) {
     if (thisArg && typeof val === 'function') {
+      /*
+        axios['get'] = fn  this指向context
+        axios['post'] = fn  this指向context
+      */
       a[key] = bind(val, thisArg);
     } else {
       a[key] = val;
