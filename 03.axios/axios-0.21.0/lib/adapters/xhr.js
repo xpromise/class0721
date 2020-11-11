@@ -26,14 +26,15 @@ module.exports = function xhrAdapter(config) {
       var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
-
+    // 将 baseURL + url = fullPath
     var fullPath = buildFullPath(config.baseURL, config.url);
+    // 设置请求信息
     request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
 
-    // Set the request timeout in MS
+    // 设置请求超时时间
     request.timeout = config.timeout;
 
-    // Listen for ready state
+    // 绑定事件
     request.onreadystatechange = function handleLoad() {
       if (!request || request.readyState !== 4) {
         return;
@@ -50,6 +51,7 @@ module.exports = function xhrAdapter(config) {
       // Prepare the response
       var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      // 返回响应
       var response = {
         data: responseData,
         status: request.status,
@@ -65,7 +67,7 @@ module.exports = function xhrAdapter(config) {
       request = null;
     };
 
-    // Handle browser request cancellation (as opposed to a manual cancellation)
+    // 处理取消请求
     request.onabort = function handleAbort() {
       if (!request) {
         return;
@@ -77,7 +79,7 @@ module.exports = function xhrAdapter(config) {
       request = null;
     };
 
-    // Handle low level network errors
+    // 处理请求错误
     request.onerror = function handleError() {
       // Real errors are hidden from us by the browser
       // onerror should only fire if it's a network error
@@ -87,7 +89,7 @@ module.exports = function xhrAdapter(config) {
       request = null;
     };
 
-    // Handle timeout
+    // 处理请求超时
     request.ontimeout = function handleTimeout() {
       var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
       if (config.timeoutErrorMessage) {

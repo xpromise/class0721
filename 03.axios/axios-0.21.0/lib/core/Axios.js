@@ -61,6 +61,7 @@ Axios.prototype.request = function request(config) {
   }
 
   // 拦截器执行流程
+  // dispatchRequest 发送请求的方法
   var chain = [dispatchRequest, undefined];
   var promise = Promise.resolve(config);
 

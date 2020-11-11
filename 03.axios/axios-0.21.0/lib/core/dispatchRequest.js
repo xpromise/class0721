@@ -26,7 +26,7 @@ module.exports = function dispatchRequest(config) {
   // Ensure headers exist
   config.headers = config.headers || {};
 
-  // Transform request data
+  // 根据请求数据的类型，设置content-type和装换数据格式
   config.data = transformData(
     config.data,
     config.headers,
