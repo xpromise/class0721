@@ -17,33 +17,34 @@
           console.log("request success 111");
           return config;
         },
-        (error) => {
-          console.log("request error 111");
-          return error;
-        }
+        // (error) => {
+        //   console.log("request error 111", error);
+        //   return error;
+        // }
       );
 
-      instance.interceptors.request.use(
-        (config) => {
-          console.log("request success 222");
-          return config;
-        },
-        (error) => {
-          console.log("request error 222");
-          return error;
-        }
-      );
+      // instance.interceptors.request.use(
+      //   (config) => {
+      //     console.log("request success 222");
+      //     // return config;
+      //     return Promise.reject();
+      //   },
+      //   (error) => {
+      //     console.log("request error 222");
+      //     return error;
+      //   }
+      // );
 
-      instance.interceptors.response.use(
-        (response) => {
-          console.log("response success 333");
-          return response;
-        },
-        (error) => {
-          console.log("response error 333");
-          return error;
-        }
-      );
+      // instance.interceptors.response.use(
+      //   (response) => {
+      //     console.log("response success 333");
+      //     return response;
+      //   },
+      //   (error) => {
+      //     console.log("response error 333");
+      //     return error;
+      //   }
+      // );
 
       instance.interceptors.response.use(
         (response) => {

@@ -69,6 +69,7 @@ Axios.prototype.request = function request(config) {
   var promise = Promise.resolve(config);
 
   // 遍历请求拦截器所有函数，将每一个函数插入到chain的前面
+  // handlers [{拦截器1}, {拦截器2}]
   this.interceptors.request.forEach(function unshiftRequestInterceptors(
     interceptor
   ) {
@@ -85,9 +86,11 @@ Axios.prototype.request = function request(config) {
 
   /*
      [
-        请求拦截器成功回调, 请求拦截器失败回调, 
+        请求拦截器成功回调2, 请求拦截器失败回调2, 
+        请求拦截器成功回调1, 请求拦截器失败回调1, 
         dispatchRequest, undefined, 
-        响应拦截器成功回调, 响应拦截器失败回调
+        响应拦截器成功回调1, 响应拦截器失败回调1,
+        响应拦截器成功回调2, 响应拦截器失败回调2,
       ]
   */
 
