@@ -30,7 +30,9 @@ function Axios(instanceConfig) {
 Axios.prototype.request = function request(config) {
   /*eslint no-param-reassign:0*/
   // Allow for axios('example/url'[, config]) a la fetch API
-  // axios(url, config)
+
+  // axios(url, config) --> request(url, config)
+  // axios(config) --> request(config)
   if (typeof config === "string") {
     config = arguments[1] || {};
     config.url = arguments[0];
@@ -63,21 +65,34 @@ Axios.prototype.request = function request(config) {
   // 拦截器执行流程
   // dispatchRequest 发送请求的方法
   var chain = [dispatchRequest, undefined];
+  // 生成了一个成功的promise
   var promise = Promise.resolve(config);
 
+  // 遍历请求拦截器所有函数，将每一个函数插入到chain的前面
   this.interceptors.request.forEach(function unshiftRequestInterceptors(
     interceptor
   ) {
+    // 往数组的最前面插入元素
     chain.unshift(interceptor.fulfilled, interceptor.rejected);
   });
 
+  // 遍历响应拦截器所有函数，将每一个函数插入到chain的后面
   this.interceptors.response.forEach(function pushResponseInterceptors(
     interceptor
   ) {
     chain.push(interceptor.fulfilled, interceptor.rejected);
   });
 
+  /*
+     [
+        请求拦截器成功回调, 请求拦截器失败回调, 
+        dispatchRequest, undefined, 
+        响应拦截器成功回调, 响应拦截器失败回调
+      ]
+  */
+
   while (chain.length) {
+    // 将chain数组中的回调移除前面两个，分别作为成功。失败
     promise = promise.then(chain.shift(), chain.shift());
   }
 

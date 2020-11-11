@@ -42,7 +42,9 @@ InterceptorManager.prototype.eject = function eject(id) {
  * @param {Function} fn The function to call for each interceptor
  */
 InterceptorManager.prototype.forEach = function forEach(fn) {
+  // fn --> chain.unshift()
   utils.forEach(this.handlers, function forEachHandler(h) {
+    // h --> { fulfilled, rejected }
     if (h !== null) {
       fn(h);
     }
