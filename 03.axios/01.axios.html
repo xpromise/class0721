@@ -19,6 +19,8 @@
       const btn4 = document.getElementById("btn4");
       const btn5 = document.getElementById("btn5");
 
+      const url_prefix = 'http://localhost:3000/'
+
       btn1.onclick = function () {
         // 发送GET请求
 
@@ -65,7 +67,7 @@
 
         axios({
           method: "PUT",
-          url: "http://localhost:3000/comments/2",
+          url: `${url_prefix}comments/2`,
           data: {
             // 请求体参数 body
             body: "i like jingge",

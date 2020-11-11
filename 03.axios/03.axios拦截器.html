@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <script>
+      // axios.create({})返回一个新的instance（和axios功能非常相似，但不完全一样）
+      const instance = axios.create({
+        // 基础路径（发送请求的默认路径）
+        baseURL: "http://localhost:3000",
+        headers: {
+          // 请求头
+        },
+        timeout: 20000, // 请求的超时时间
+      });
+
+      // 拦截器
+      // 请求拦截器: 在发送请求之前触发
+      instance.interceptors.request.use(
+        // 成功
+        (config) => {
+          // config 所有请求配置（请求地址、请求方式、请求头、请求体。。。）
+          // 修改请求的配置
+          // if (token) {
+          //   config.headers.authorization = `Bearer ${token}`;
+          // }
+
+          return config;
+        }
+        // 失败
+        // () => {}
+      );
+      // 响应拦截器：在响应返回之后触发
+      instance.interceptors.response.use(
+        // 成功 2xx
+        (response) => {
+          // 响应成功: 并不代表功能成功
+
+          /*
+            response.data是响应数据：
+              {
+                code: 10000, // 代表功能成功
+                data: { username: xxx }
+              },
+
+              {
+                code: 10001, // 代表功能失败
+                message: '用户名或密码错误'
+              }
+          */
+          if (response.data.code === 10000) {
+            // 代表功能成功 返回真正数据 触发then
+            return response.data.data;
+          } else {
+            // 代表失败 - 将来会触发catch
+            return Promise.reject(response.data.message);
+          }
+        },
+        // 失败 非2xx
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+
+
+      instance({
+        method: "GET",
+        url: "/comments",
+        // headers: {
+        //   authorization: `Bearer ${token}`
+        // }
+      })
+        .then((value) => {
+          console.log(value);
+        })
+        .catch((reason) => {
+          console.log(reason);
+        });
+    </script>
+  </body>
+</html>
