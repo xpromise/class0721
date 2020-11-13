@@ -17,13 +17,104 @@
         计算属性存在缓存, 多次读取只执行一次getter计算
     -->
     <div id="app">
-      姓: <input type="text" placeholder="First Name" /><br />
-      名: <input type="text" placeholder="Last Name" /><br />
-      姓名1: <input type="text" placeholder="Full Name1" /><br />
-      姓名2: <input type="text" placeholder="Full Name2" /><br />
+      姓:
+      <input type="text" placeholder="First Name" v-model="firstName" /><br />
+      名: <input type="text" placeholder="Last Name" v-model="lastName" /><br />
+      姓名1:
+      <input type="text" placeholder="Full Name1" v-model="fullName" /><br />
+      姓名2:
+      <input type="text" placeholder="Full Name2" :value="fullName1" /><br />
+      姓名3:
+      <input type="text" placeholder="Full Name3" :value="fullName3" /><br />
     </div>
 
     <script type="text/javascript" src="../js/vue.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+      let person = {
+        firstName: "li",
+        lastName: "peihua",
+      };
+
+      // 定义对象的属性的属性(元属性)
+      Object.defineProperty(person, "fullName", {
+        // value: 'li peihua', // 属性的值
+        configurable: false, // 是否可以重新配置或者删除
+        // writable: true, // 是否可以修改
+        enumerable: true, // 是否可以枚举、遍历 for in
+        get() {
+          // 属性读取时会调用的方法（返回值就是属性的值）
+          return this.firstName + " " + this.lastName;
+        },
+        set(newVal) {
+          const [firstName, lastName] = newVal.split(" ");
+          // 属性设置时会调用的方法
+          this.firstName = firstName;
+          this.lastName = lastName;
+        },
+      });
+
+      console.log(person.fullName); // 此时会调用get方法
+
+      person.fullName = "yan haijing"; // 此时会调用set方法
+
+      console.log(person);
+    </script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          firstName: "li",
+          lastName: "peihua",
+          aaa: "aaa",
+          fullName3: "li peihua",
+        },
+        // 计算属性
+        // 计算属性会监视内部使用过的属性的变化，一旦发生变化，计算属性就要重新计算
+        computed: {
+          // 给vm定义一个属性，叫fullName
+          fullName: {
+            // fullName属性的读取的方法
+            get() {
+              // vue内部会对data、methods、computed等属性进行数据代理（将对象中的属性挂在到vm上）
+              // 就能直接通过 vm/this 直接访问属性
+              return this.firstName + " " + this.lastName;
+            },
+            // fullName属性的设置的方法
+            set(newVal) {
+              const [firstName, lastName] = newVal.split(" ");
+              // vue可以直接更新data数据，同时用户界面也会发生变化（响应式）
+              this.firstName = firstName;
+              this.lastName = lastName;
+            },
+          },
+
+          // 只读的计算属性（不能修改）
+          // 这个方法相对于fullName1的get方法，没有set
+          fullName1() {
+            return this.firstName + " " + this.lastName;
+          },
+        },
+
+        // 监视属性
+        // 监视data中的属性，一旦发生变化，就会调用相应的函数
+        watch: {
+          // 监视firstName属性的变化，一旦发生变化就会调用函数
+          firstName(newVal) {
+            // ['li', 'peihua']
+            const names = this.fullName3.split(" ");
+            // ['wang', 'peihua']
+            names[0] = newVal;
+
+            this.fullName3 = names.join(" ");
+          },
+          lastName(newVal) {
+            const names = this.fullName3.split(" ");
+            names[1] = newVal;
+            this.fullName3 = names.join(" ");
+          },
+        },
+      });
+    </script>
   </body>
 </html>
