@@ -46,7 +46,8 @@ module.exports = function dispatchRequest(config) {
       delete config.headers[method];
     }
   );
-
+  
+  // 发送请求一种方案（xhr，http）
   var adapter = config.adapter || defaults.adapter;
 
   return adapter(config).then(function onAdapterResolution(response) {

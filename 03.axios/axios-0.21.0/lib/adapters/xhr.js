@@ -61,6 +61,7 @@ module.exports = function xhrAdapter(config) {
         request: request
       };
 
+      // 判断status是否是2xx
       settle(resolve, reject, response);
 
       // Clean up request
