@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01_HelloWorld</title>
+  </head>
+  <body>
+    <!--
+      1. 引入Vue.js
+      2. 创建Vue对象
+        el : 指定根element(选择器)
+        data : 初始化数据(页面可以访问)
+      3. 双向数据绑定 : v-model
+      4. 显示数据 : {{xxx}}
+      5. 理解vue的mvvm实现
+    -->
+    <div id="root">
+      <!-- 双大括号表达式 、插值语法 -->
+      <h1>{{msg}}</h1>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+      /*
+        引入vue.min.js，全局就会有一个函数：Vue
+      */
+
+      // vm就是Vue实例对象
+      const vm = new Vue({
+        // 配置对象：属性名固定的对象
+        // el: '#root', // element元素，获取DOM元素
+        data: { // 数据：用来渲染到页面上
+          msg: 'hello world',
+        }
+      })
+
+      console.log(vm);
+      vm.$mount('#root');
+
+    </script>
+  </body>
+</html>
