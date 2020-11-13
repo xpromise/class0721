@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>04_class与style绑定</title>
+    <style>
+      .red {
+        color: red;
+      }
+      .green {
+        color: green;
+      }
+      .size {
+        font-size: 30px;
+      }
+    </style>
   </head>
   <body>
     <!--
@@ -20,15 +31,44 @@
 
     <div id="app">
       <h2>1. class绑定: :class='xxx'</h2>
-      <p>这是一段文字~</p>
-      <button>改变颜色</button>
+      <!-- 单个动态类名 用字符串形式 -->
+      <!-- <p :class="isRed ? 'red' : 'green'">这是一段文字~</p> -->
+
+      <!-- 多个动态类名 用字符串形式 -->
+      <!-- <p :class="{red: isRed, green: !isRed}">这是一段文字~</p> -->
+      <p :class="['red', 'size']">这是一段文字~</p>
+      
+      <!-- <p class="isRed ? 'red' : 'green'">这是一段文字~</p> -->
+      <button @click="changeColor">改变颜色</button>
 
       <h2>2. style绑定</h2>
-      <p>这是一段文字~</p>
-      <input type="text" placeholder="请输入字体大小" />
+
+      <p :style="{ 'fontSize': fontSize + 'px', color: 'red' }">这是一段文字~</p>
+      <input type="text" placeholder="请输入字体大小" v-model="fontSize"/>
     </div>
 
     <script src="../js/vue.js"></script>
-    <script></script>
+    <script>
+      /*
+        class和style到底用哪种？
+          1. 如果样式将来是可变的用style，静态写死就用class
+          2. 如果样式将来是可变
+            但是只在某个范围变化（red --> green --> red），用class
+            但是如果变化时无穷，用style
+            静态写死就用class
+      */
+      new Vue({
+        el: "#app",
+        data: {
+          isRed: true,
+          fontSize: 16
+        },
+        methods: {
+          changeColor() {
+            this.isRed = !this.isRed;
+          },
+        },
+      });
+    </script>
   </body>
 </html>
