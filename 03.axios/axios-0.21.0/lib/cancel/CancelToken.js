@@ -19,7 +19,9 @@ function CancelToken(executor) {
   });
 
   var token = this;
+
   executor(function cancel(message) {
+    // token.reason代表取消请求的原因
     if (token.reason) {
       // Cancellation has already been requested
       return;

@@ -161,10 +161,11 @@ module.exports = function xhrAdapter(config) {
     if (config.cancelToken) {
       // Handle cancellation
       config.cancelToken.promise.then(function onCanceled(cancel) {
+        // 当响应回来了，就不取消请求了
         if (!request) {
           return;
         }
-
+        // xhr.abort() 用来取消ajax请求的
         request.abort();
         reject(cancel);
         // Clean up request

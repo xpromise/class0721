@@ -25,10 +25,10 @@
       //       console.log("reason", reason);
       //     });
       // };
-   
+
       // document.getElementById("btn2").onclick = function() {
       //   // 取消请求
-      //   source.cancel('取消请求了~~~'); 
+      //   source.cancel('取消请求了~~~');
       // }
 
       let cancel = null;
@@ -44,14 +44,18 @@
             console.log("value", value);
           })
           .catch((reason) => {
+            if (axios.isCancel(reason)) {
+              console.log("错误是取消请求导致的", reason);
+              return;
+            }
             console.log("reason", reason);
           });
       };
-   
-      document.getElementById("btn2").onclick = function() {
+
+      document.getElementById("btn2").onclick = function () {
         // 取消请求
-        cancel('取消请求了2222~~~'); 
-      }
-   </script>
+        cancel("取消请求了2222~~~");
+      };
+    </script>
   </body>
 </html>
