@@ -1,53 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>08_表单输入绑定</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>08_表单输入绑定</title>
+  </head>
+  <body>
+    <!--
 1. 使用v-model(双向数据绑定)自动收集数据
   text/textarea
   checkbox
   radio
   select
 -->
-<div id="demo">
-  <form action="/xxx">
-    <span>用户名: </span>
-    <input type="text"><br>
+    <div id="demo">
+      <form action="/xxx" @submit.prevent="regist">
+        <span>用户名: </span>
+        <input type="text" v-model="user.username" /><br />
 
-    <span>密码: </span>
-    <input type="password"><br>
+        <span>密码: </span>
+        <input type="password" v-model="user.password" /><br />
 
-    <span>性别: </span>
-    <input type="radio" id="female">
-    <label for="female">女</label>
-    <input type="radio" id="male">
-    <label for="male">男</label><br>
+        <span>性别: </span>
+        <input type="radio" id="female" v-model="user.sex" value="女" />
+        <label for="female">女</label>
+        <input type="radio" id="male" v-model="user.sex" value="男" />
+        <label for="male">男</label><br />
 
-    <span>爱好: </span>
-    <input type="checkbox" id="basket" >
-    <label for="basket">篮球</label>
-    <input type="checkbox" id="foot">
-    <label for="foot">足球</label>
-    <input type="checkbox" id="pingpang">
-    <label for="pingpang">乒乓</label><br>
+        <span>爱好: </span>
+        <input
+          type="checkbox"
+          id="basket"
+          v-model="user.hobby"
+          value="basket"
+        />
+        <label for="basket">篮球</label>
+        <input type="checkbox" id="foot" v-model="user.hobby" value="foot" />
+        <label for="foot">足球</label>
+        <input
+          type="checkbox"
+          id="pingpang"
+          v-model="user.hobby"
+          value="pingpang"
+        />
+        <label for="pingpang">乒乓</label><br />
 
-    <span>城市: </span>
-    <select>
-      <option value="">未选择</option>
-    </select><br>
-    <span>介绍: </span>
-    <textarea rows="10"></textarea><br><br>
+        <span>城市: </span>
+        <select v-model="user.city">
+          <option value="">未选择</option>
+          <option value="1">北京</option>
+          <option value="2">上海</option>
+          <option value="3">深圳</option>
+        </select>
+        <br />
+        <span>介绍: </span>
+        <textarea rows="10" v-model="user.info"></textarea><br /><br />
 
-    <input type="submit" value="注册">
-  </form>
-</div>
+        <input type="submit" value="注册" />
+      </form>
+    </div>
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
-
-</script>
-</body>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#demo",
+        data: {
+          user: {
+            username: "",
+            password: "",
+            sex: "男",
+            hobby: [],
+            city: "",
+            info: "",
+          },
+        },
+        methods: {
+          regist() {
+            console.log(this.user);
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
