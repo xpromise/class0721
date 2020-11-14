@@ -16,9 +16,13 @@
           {{item.id}} - {{item.name}} - {{item.age}}
         </li>
       </ul>
-      <button @click="sort(1)">年龄升序</button>
+      <!-- <button @click="sort(1)">年龄升序</button>
       <button @click="sort(-1)">年龄降序</button>
-      <button @click="sort(0)">原本顺序</button>
+      <button @click="sort(0)">原本顺序</button> -->
+
+      <button @click="orderType = 1">年龄升序</button>
+      <button @click="orderType = -1">年龄降序</button>
+      <button @click="orderType = 0">原本顺序</button>
     </div>
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript">

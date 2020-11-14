@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>09_Vue实例_生命周期</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>09_Vue实例_生命周期</title>
+  </head>
+  <body>
+    <!--
 1. vue对象的生命周期
   1). 初始化显示
     * beforeCreate()
@@ -23,11 +23,75 @@
   beforeDestory(): 做收尾工作, 如: 清除定时器
 -->
 
-<div>
+    <div id="app">
+      <p>{{num}}</p>
+      <button @click="num++">按钮</button>
+      <button @click="$destroy()">go die</button>
+    </div>
 
-</div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      /*
+        Vue生命周期函数：
+          1. 初始化
+              beforeCreate  在数据代理之前触发，所以此时不能操作data等数据
+              created
+              beforeMount 在挂载之前（页面渲染之前），所以此时不能操作DOM
+              **mounted**
+                重要！
+                发送请求、设置定时器、绑定事件等一次性的任务
+          2. 更新
+              beforeUpdate
+              updated
+          3. 卸载
+              beforeDestroy
+                做收尾工作：清除定时器、解绑事件等任务
+              destroyed
+      */
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript"></script>
-</body>
+      new Vue({
+        el: "#app",
+        data: {
+          test: 123,
+          num: 0,
+        },
+        methods: {
+          // goDie() {
+          //   // this.$destroy()
+          // }
+        },
+        beforeDestroy() {
+          console.log('beforeDestroy', this);
+        },
+        destroyed() {
+          console.log('destroyed', this);
+        },
+        beforeUpdate() {
+          console.log("beforeUpdate", this.num);
+        },
+        updated() {
+          console.log("updated", this.num);
+        },
+        beforeCreate() {
+          // 在数据代理（将data中的数据代理到this上）之前触发
+          // 此时不能访问data、methods、computed...数据
+          console.log("beforeCreate", this, this.test);
+        },
+        created() {
+          // 在数据代理之后触发
+          console.log("created", this, this.test);
+        },
+        beforeMount() {
+          // 在挂载之前（页面渲染之前）
+          // 不能可以操作DOM
+          console.log("beforeMount", this, this.test);
+        },
+        mounted() {
+          // 在挂载之后（页面渲染之后）
+          // 可以直接操作DOM
+          console.log("mounted", this, this.test);
+        },
+      });
+    </script>
+  </body>
 </html>
