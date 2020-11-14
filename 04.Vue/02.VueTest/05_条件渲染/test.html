@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>08_条件渲染</title>
+  </head>
+  <body>
+    <!--
+      1. 条件渲染指令
+        v-if  隐藏的时候回删除整个元素（元素会移除DOM树）
+        v-else
+        v-show 通过display样式来控制隐藏（元素还在DOM树上）
+
+      2. 比较v-if与v-show
+        v-if因为要插入和移除DOM，所以性能较差
+        如果需要频繁切换 v-show 较好
+
+        如果不频繁，只用一次，v-if
+      -->
+
+    <div id="app">
+      <p v-if="isHShow">李培华真帅</p>
+      <!-- <p v-else="true">静哥真帅</p> -->
+      <p v-else-if="isJShow">静哥真帅</p>
+      <p v-else>雷哥真帅</p>
+      <!-- <p v-show="isShow">李培华真帅</p> -->
+      <button @click="handleShow">按钮</button>
+    </div>
+
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#app",
+        data: {
+          isHShow: false,
+          isJShow: false,
+        },
+        methods: {
+          handleShow() {
+            // this.isShow = !this.isShow;
+            this.isHShow = false;
+            this.isJShow = true;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
