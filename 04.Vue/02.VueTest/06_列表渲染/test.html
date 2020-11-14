@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>06_列表渲染</title>
-</head>
-<body>
-
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_列表渲染</title>
+  </head>
+  <body>
+    <!--
 1. 列表显示
   数组: v-for / index
   对象: v-for / key
@@ -15,16 +14,74 @@
   替换item
 -->
 
-<div id="demo">
-  <h2>测试: v-for 遍历数组</h2>
+    <div id="demo">
+      <h2>测试: v-for 遍历数组</h2>
+      <ul>
+        <!-- <li v-for="(item, index) in users" :key="item.id"> -->
+        <li v-for="item in users" :key="item.id">
+          {{item.id}} - {{item.name}} - {{item.age}} -
+          <!-- del(item.id)并不是代表函数一上来调用了，而是给del函数传参 -->
+          <button @click="del(item.id)">删除</button>
+          - <button @click="update(item.id)">更新</button>
+        </li>
 
-  <h2>测试: v-for 遍历对象</h2>
+        <!-- <li v-for="(item, index) in users">
+          {{`${item.id} - ${item.name} - ${item.age}`}}
+        </li> -->
+      </ul>
+      <h2>测试: v-for 遍历对象</h2>
+      <ul>
+        <li v-for="(value, key) in person" :key="key">{{key}} - {{value}}</li>
+      </ul>
+    </div>
 
-</div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#demo",
+        data: {
+          users: [
+            { id: 1, name: "peihua", age: 38 },
+            { id: 2, name: "jingge", age: 38 },
+            { id: 3, name: "leige", age: 68 },
+          ],
+          arr: [1, 2, 3],
+          person: {
+            name: "huage",
+            age: 48,
+            sex: "不详",
+          },
+        },
+        methods: {
+          del(id) {
+            // console.log(event);
+            /*
+              返回一个新数组，不会修改原数组
+              map     返回新数组特点：长度不变，值变
+              filter  返回新数组特点：长度变，值不变
+              reduce  返回特点：长度变，值也变
+            */
+            this.users = this.users.filter((user) => user.id !== id);
+          },
+          update(id) {
+            // const user = this.users.find((user) => user.id === id);
+            // user.age++;
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+            // let num = this.arr.find((item, index) => index === 0);
+            // num++;
 
-</script>
-</body>
+            this.users = this.users.map((user) => {
+              if (user.id === id) {
+                return {
+                  ...user,
+                  age: ++user.age,
+                };
+              }
+              return user;
+            });
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
