@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>10_过渡&动画2</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>10_过渡&动画2</title>
+    <style>
+      #box {
+        position: absolute;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+        /* transition: left 2s;  */
+        /* animation: move 5s linear 1s infinite alternate-reverse; */
+      }
+      #btn {
+        position: absolute;
+        top: 150px;
+      }
 
-</head>
-<body>
-
-<script type="text/javascript" src="../js/vue.js"></script>
-<script>
-
-</script>
-</body>
+      @keyframes move {
+        0% {
+          left: 0;
+        }
+        50% {
+          left: 500px;
+        }
+        100% {
+          left: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="box" :style="{left: left + 'px'}"></div>
+      <button id="btn" @click="left+=100">按钮</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          left: 0,
+        },
+      });
+    </script>
+  </body>
 </html>
