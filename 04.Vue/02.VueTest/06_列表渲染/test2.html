@@ -1,18 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>06_列表渲染_过滤与排序</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_列表渲染_过滤与排序</title>
+  </head>
+  <body>
+    <!--
 1. 列表过滤
 2. 列表排序
 -->
+    <div id="app">
+      <input type="text" placeholder="请输入搜索内容" v-model="searchText" />
+      <ul>
+        <li v-for="item in searchUsers" :key="item.id">
+          {{item.id}} - {{item.name}} - {{item.age}}
+        </li>
+      </ul>
+      <button @click="sort(1)">年龄升序</button>
+      <button @click="sort(-1)">年龄降序</button>
+      <button @click="sort(0)">原本顺序</button>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      /*
+        计算属性computed
+          根据已存在属性，来计算生成一个新的值
+        监视属性watch
+          监视已存在属性的变化，一旦变化，会保存数据，发送请求等操作
+      */
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+      new Vue({
+        el: "#app",
+        data: {
+          users: [
+            { id: 1, name: "jack", age: 38 },
+            { id: 2, name: "rose", age: 16 },
+            { id: 3, name: "tom", age: 27 },
+            { id: 4, name: "jerry", age: 40 },
+            { id: 5, name: "lucy", age: 22 },
+            { id: 6, name: "lilei", age: 29 },
+          ],
+          searchText: "",
+          // 升序：1 降序：-1 原本顺序 0
+          orderType: 0,
+        },
+        computed: {
+          searchUsers() {
+            // 过滤
+            const filterUsers = this.users.filter((user) => {
+              // 没有找到 -1
+              // user.name.indexOf(this.searchText)
+              return user.name.includes(this.searchText);
+            });
 
-</script>
-</body>
+            // 原本顺序
+            if (this.orderType === 0) return filterUsers;
+
+            // 排序
+            const sortedUsers = filterUsers.sort((a, b) => {
+              return this.orderType === 1 ? a.age - b.age : b.age - a.age;
+            });
+
+            return sortedUsers;
+          },
+        },
+        methods: {
+          sort(orderType) {
+            this.orderType = orderType;
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
