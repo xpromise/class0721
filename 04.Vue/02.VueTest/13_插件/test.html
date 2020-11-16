@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>17_插件</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>17_插件</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{time | formatDate('YYYY-MM-DD HH:mm:ss')}}</p>
+      <p v-upper-text="msg"></p>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.9.4/dayjs.min.js"></script>
+    <script src="./MyPlugin.js"></script>
+    <script type="text/javascript">
+      /* 
+    库：  
+      jQuery（操作DOM） dayjs（格式化时间） lodash（节流、防抖...） --> 提供特定功能
+    框架:
+      功能更加强大的库 React Vue
+    插件：
+      扩展库、框架的功能
+        jQuery插件 扩展jQuery功能
+        React插件 React-Router
+        Vue插件 Vue-Router Vuex...
+  */
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+      // 必须要在new Vue 之前使用插件
+      // 使用Vue插件 --> 调用插件函数，传入Vue
+      Vue.use(MyPlugin);
+      // Vue.use(MyPlugin1);
 
-</script>
-</body>
+      new Vue({
+        el: "#app",
+        data: {
+          time: Date.now(),
+          msg: "Atguigu",
+        },
+        mounted() {
+          Vue.globalMethod();
+          this.$instanceMethod();
+        },
+      });
+    </script>
+  </body>
 </html>
