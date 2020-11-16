@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>11_过滤器</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>11_过滤器</title>
+  </head>
+  <body>
+    <!--
 1. 理解过滤器
   功能: 对要显示的数据进行特定格式化后再显示
   注意: 并没有改变原本的数据, 可是产生新的对应的数据
@@ -19,14 +19,50 @@
     <div>{{myData | filterName}}</div>
     <div>{{myData | filterName(arg)}}</div>
 -->
-<!--需求: 对当前时间进行指定格式显示-->
-<div id="test">
-  <h2>显示格式化的日期时间</h2>
-</div>
+    <!--需求: 对当前时间进行指定格式显示-->
+    <div id="test">
+      <h2>显示格式化的日期时间</h2>
+      <!-- {{nowDate}} -->
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script>
+      <!-- 使用formatDate过滤器格式化date数据 -->
+      {{date | formatDate('YYYY-MM-DD', 123)}} {{date |
+      formatDate1('HH:mm:ss')}}
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.9.4/dayjs.min.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script>
+      /*
+        处理日期的工具函数库：
+          1. moment 老大哥，体积太大，现在已经不用了
+          2. dayjs 新生代，风格和moment一致
+          3. date-fns 新生代，风格和lodash类似
+      */
 
-</script>
-</body>
+      // 全局过滤器：所有实例都可以使用
+      Vue.filter("formatDate1", (value, str) => {
+        return dayjs(value).format(str);
+      });
+
+      new Vue({
+        el: "#test",
+        data: {
+          date: Date.now(),
+        },
+        // computed: {
+        //   nowDate() {
+        //     return dayjs(this.date).format('YYYY/MM/DD HH:mm:ss')
+        //   }
+        // }
+
+        // 局部过滤器，只有当前实例可以使用
+        // 处理日期文本数据 --> 过滤器(专门用来格式化数据: 日期、钱...)
+        filters: {
+          formatDate(value, str, a) {
+            console.log(value, str, a);
+            return dayjs(value).format(str);
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
