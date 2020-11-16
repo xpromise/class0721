@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>组件</title>
+  </head>
+  <body>
+    <div id="demo">
+      <h1>app...</h1>
+      <!-- 使用组件 -->
+      <test-component></test-component>
+      <!-- <TestComponent></TestComponent> -->
+    </div>
+
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      // 定义组件
+      const TestComponent = Vue.extend({
+        // 组件的配置对象（和new Vue传入的配置对象基本对象）
+        // data: {
+        //   num: 0,
+        // },
+        data() {
+          // 返回值就是data数据
+          return {
+            num: 0,
+          };
+        },
+        methods: {
+          add() {
+            this.num++;
+          },
+        },
+        // 组件模板页面（组件要渲染的页面）
+        template:
+          "<div> <p>{{num}}</p> <button @click='add'>按钮</button> </div>",
+      });
+
+      /*
+        组件命名：
+          1. test-component 
+            使用：<test-component />
+          2. TestComponent
+            使用：<test-component />
+                <TestComponent /> 这种只能在脚手架中生效，页面中不行
+      */
+
+      new Vue({
+        el: "#demo",
+        // 注册组件（一旦注册了组件，当前就能使用组件）
+        components: {
+          // "test-component": TestComponent,
+          TestComponent: TestComponent,
+        },
+      });
+    </script>
+  </body>
+</html>
