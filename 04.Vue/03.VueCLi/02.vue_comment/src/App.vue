@@ -12,9 +12,9 @@
 
     <div class="container">
       <!-- 3. 使用组件 -->
-      <CommentAdd />
+      <CommentAdd :addComment="addComment" />
       <!-- 以标签属性的方式传递（props） -->
-      <CommentList :comments="comments" />
+      <CommentList :comments="comments" :delComment="delComment"/>
     </div>
   </div>
 </template>  
@@ -33,6 +33,15 @@ export default {
         { id: 2, name: "jinge", content: "抽烟喝酒洗脚" },
       ],
     };
+  },
+  methods: {
+    addComment(name, content) {
+      // 函数参数有多少看函数内部有不能确定的量
+      this.comments.unshift({ id: Date.now(), name, content });
+    },
+    delComment(id) {
+      this.comments = this.comments.filter((comment) => comment.id !== id);
+    },
   },
   // 2. 注册组件
   components: {
