@@ -31,18 +31,18 @@ export default {
   name: "App", // 组件名称
   data() {
     return {
-      num: 0
+      num: 0,
     };
   },
   methods: {
     add() {
       this.num++;
-    }
+    },
   },
   // 注册组件
   components: {
-    Father
-  }
+    Father,
+  },
 };
 </script>
 

@@ -1,9 +1,12 @@
-<template> <h3>child....</h3></template>
+<template>
+  <h3>child....</h3>
+</template>
 
 <script>
 export default {
-  name: "Child"
+  name: "Child",
 };
 </script>
 
-<style></style>
+<style>
+</style>

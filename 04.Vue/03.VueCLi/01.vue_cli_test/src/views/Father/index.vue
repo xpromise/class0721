@@ -19,8 +19,8 @@ export default {
     num: {
       // 代表要接受的数据是num、类型是number、必须传
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   // data: {
   //   aaa: 123
@@ -29,8 +29,8 @@ export default {
     return {};
   },
   mounted() {
-    console.log(this.num);
-  }
+    // console.log(this.num);
+  },
 };
 </script>
 
