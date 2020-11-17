@@ -14,7 +14,7 @@
       <!-- 3. 使用组件 -->
       <CommentAdd :addComment="addComment" />
       <!-- 以标签属性的方式传递（props） -->
-      <CommentList :comments="comments" :delComment="delComment"/>
+      <CommentList :comments="comments" :delComment="delComment" />
     </div>
   </div>
 </template>  

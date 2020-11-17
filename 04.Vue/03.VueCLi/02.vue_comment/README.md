@@ -1,24 +1,48 @@
-# 02.vue_comment
+# 评论管理练习
 
-## Project setup
-```
-yarn install
-```
+## 1. 拆分组件
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+根据用户界面的功能（JS 功能）和变化（用户界面的变化）来拆分
 
-### Compiles and minifies for production
-```
-yarn build
-```
+- App
+- CommentAdd
+- CommentList
+- CommentDel
 
-### Lints and fixes files
-```
-yarn lint
-```
+## 2. 实现静态组件
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 根据用户界面实现相应的组件
+- 样式应该放在相应组件内部
+- 静态样式（如：bootstrap.css）可以放在 index.html 中引入
+
+## 3. 实现动态组件
+
+1. 先实现数据动态展示
+
+- 问题 1：数据类型是什么？
+
+  - 因为要遍历展示用数组
+  - 展示的数据有多项值（用户名、评论内容），所以里面用对象
+  - 整体为 [{name: xxx, content: xxx, id: 1}...]
+
+- 问题 2：数据名称是什么？
+
+  - 看到底是什么样的数据
+  - comments
+
+- 问题 3：数据定义在哪个组件中?
+
+  - 目前只学习 props
+  - 如果数据只有一个组件使用，就定义在单个组件内容
+  - 如果数据有多个组件使用，就定义在他们的公共父组件中（状态提升）
+
+- 功能实现：
+  - 先在 App 组件定义数据，然后以 props 方式将数据传递给 CommentList 组件
+  - CommentList 组件声明接受 props 数据，然后使用 v-for 遍历生成多个 CommentDel 组件
+  - 同时传入 comment 数据，CommentDel 组件声明接受 props 数据，然后使用
+
+2. 在实现其他（添加、删除）功能
+
+- props 数据不能修改，只能读取使用！！！
+- 需要在数据源定义更新数据的方法，然后以 props 方案传递给子组件使用
+  - 定义方法的时候，函数的参数数量看函数有多少个不确定的量
