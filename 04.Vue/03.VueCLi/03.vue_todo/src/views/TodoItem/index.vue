@@ -1,16 +1,33 @@
 <template>
-  <li>
+  <li @mouseenter="isShow = true" @mouseleave="isShow = false">
     <label>
-      <input type="checkbox" />
-      <span>xxxxx</span>
+      <input type="checkbox" v-model="todo.isCompleted" />
+      <span>{{ todo.task }}</span>
     </label>
-    <button class="btn btn-danger" style="display: none">删除</button>
+    <button class="btn btn-danger" v-show="isShow" @click="del">删除</button>
   </li>
 </template>
 
 <script>
 export default {
   name: "TodoItem",
+  props: {
+    todo: Object,
+    delTodo: Function,
+  },
+  data() {
+    return {
+      isShow: false,
+    };
+  },
+  methods: {
+    del() {
+      const { id, task } = this.todo;
+      if (window.confirm(`您确认要删除 ${task} 吗？`)) {
+        this.delTodo(id);
+      }
+    },
+  },
 };
 </script>
 
