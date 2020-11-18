@@ -30,6 +30,9 @@
 <script>
 export default {
   name: "CommentAdd",
+  props: {
+    addComment: Function,
+  },
   data() {
     return {
       name: "",
@@ -44,11 +47,10 @@ export default {
         return;
       }
       // 添加评论
-      // 触发addComment事件
-      this.$bus.$emit("addComment", name, content);
+      this.addComment(name, content);
       // 清空用户数据
-      this.name = "";
-      this.content = "";
+      this.name = '';
+      this.content = '';
     },
   },
 };

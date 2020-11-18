@@ -13,11 +13,17 @@
 <script>
 export default {
   name: "CommentDel",
-  props: ["comment"],
+  props: {
+    comment: Object,
+    delComment: Function,
+  },
   methods: {
     del() {
       if (confirm(`您确认删除${this.comment.name}的评论吗?`)) {
-        this.$bus.$emit("delComment", this.comment.id);
+        // 点击了确认
+        const id = this.comment.id;
+        // console.log(id);
+        this.delComment(id);
       }
     },
   },
