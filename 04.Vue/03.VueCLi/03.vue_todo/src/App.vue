@@ -23,6 +23,7 @@ export default {
     const todos = JSON.parse(window.localStorage.getItem("todos")) || [];
 
     return {
+<<<<<<< HEAD
       todos,
       // todos: [
       //   { id: 1, task: "抽烟", isCompleted: false },
@@ -32,6 +33,16 @@ export default {
       // person: {
       //   name: 'jack'
       // }
+=======
+      todos: [
+        { id: 1, task: "抽烟", isCompleted: false },
+        { id: 2, task: "喝酒", isCompleted: true },
+        { id: 3, task: "烫头", isCompleted: false },
+      ],
+      person: {
+        name: 'jack'
+      }
+>>>>>>> 21185d482109b2850fcb443572be9f06eecf95f7
     };
   },
   methods: {
@@ -41,6 +52,7 @@ export default {
     delTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
+<<<<<<< HEAD
     updateTodo(id) {
       const todo = this.todos.find((todo) => todo.id === id);
       todo.isCompleted = !todo.isCompleted;
@@ -54,6 +66,12 @@ export default {
         ...todo,
         isCompleted,
       }));
+=======
+    checkAllTodos(isCompleted) {
+      this.todos.forEach((todo) => {
+        todo.isCompleted = isCompleted;
+      });
+>>>>>>> 21185d482109b2850fcb443572be9f06eecf95f7
     },
     // 批量删除
     batchDelTodos() {
@@ -90,7 +108,11 @@ export default {
     // todos(newVal) {
     //   window.localStorage.setItem("todos", JSON.stringify(newVal));
     // },
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 21185d482109b2850fcb443572be9f06eecf95f7
     // 深度监视：会监视所有属性（对象中对象）
     todos: {
       handler(newVal) {
