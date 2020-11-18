@@ -5,6 +5,7 @@
       :key="todo.id"
       :todo="todo"
       :delTodo="delTodo"
+      :updateTodo="updateTodo"
     />
   </ul>
 </template>
@@ -17,6 +18,7 @@ export default {
   props: {
     todos: Array,
     delTodo: Function,
+    updateTodo: Function
   },
   components: {
     TodoItem,

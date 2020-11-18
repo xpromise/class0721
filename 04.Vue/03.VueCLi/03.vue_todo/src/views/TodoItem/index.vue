@@ -1,7 +1,8 @@
 <template>
   <li @mouseenter="isShow = true" @mouseleave="isShow = false">
     <label>
-      <input type="checkbox" v-model="todo.isCompleted" />
+      <!-- <input type="checkbox" v-model="todo.isCompleted" /> -->
+      <input type="checkbox" v-model="isCompleted" />
       <span>{{ todo.task }}</span>
     </label>
     <button class="btn btn-danger" v-show="isShow" @click="del">删除</button>
@@ -14,6 +15,7 @@ export default {
   props: {
     todo: Object,
     delTodo: Function,
+    updateTodo: Function,
   },
   data() {
     return {
@@ -26,6 +28,17 @@ export default {
       if (window.confirm(`您确认要删除 ${task} 吗？`)) {
         this.delTodo(id);
       }
+    },
+  },
+  computed: {
+    // 目的: props数据应该是只读不能直接修改
+    isCompleted: {
+      get() {
+        return this.todo.isCompleted;
+      },
+      set() {
+        this.updateTodo(this.todo.id);
+      },
     },
   },
 };

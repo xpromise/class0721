@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <TodoHeader :addTodo="addTodo" />
-      <TodoList :todos="todos" :delTodo="delTodo" />
+      <TodoList :todos="todos" :delTodo="delTodo" :updateTodo="updateTodo" />
       <TodoFooter
         :completedCount="completedCount"
         :total="total"
@@ -20,15 +20,18 @@ import TodoFooter from "./views/TodoFooter";
 export default {
   name: "App",
   data() {
+    const todos = JSON.parse(window.localStorage.getItem("todos")) || [];
+
     return {
-      todos: [
-        { id: 1, task: "抽烟", isCompleted: false },
-        { id: 2, task: "喝酒", isCompleted: true },
-        { id: 3, task: "烫头", isCompleted: false },
-      ],
-      person: {
-        name: 'jack'
-      }
+      todos,
+      // todos: [
+      //   { id: 1, task: "抽烟", isCompleted: false },
+      //   { id: 2, task: "喝酒", isCompleted: true },
+      //   { id: 3, task: "烫头", isCompleted: false },
+      // ],
+      // person: {
+      //   name: 'jack'
+      // }
     };
   },
   methods: {
@@ -38,10 +41,19 @@ export default {
     delTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
+    updateTodo(id) {
+      const todo = this.todos.find((todo) => todo.id === id);
+      todo.isCompleted = !todo.isCompleted;
+    },
     checkAllTodos(isCompleted) {
-      this.todos.forEach((todo) => {
-        todo.isCompleted = isCompleted;
-      });
+      // this.todos.forEach((todo) => {
+      //   todo.isCompleted = isCompleted;
+      // });
+
+      this.todos = this.todos.map((todo) => ({
+        ...todo,
+        isCompleted,
+      }));
     },
     // 批量删除
     batchDelTodos() {
@@ -78,7 +90,7 @@ export default {
     // todos(newVal) {
     //   window.localStorage.setItem("todos", JSON.stringify(newVal));
     // },
-    
+
     // 深度监视：会监视所有属性（对象中对象）
     todos: {
       handler(newVal) {
