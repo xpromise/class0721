@@ -1,12 +1,12 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isCheckAll" />
     </label>
     <span>
       <span>已完成{{ completedCount }}</span> / 全部{{ total }}
     </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" @click="batchDel">清除已完成任务</button>
   </div>
 </template>
 
@@ -16,7 +16,27 @@ export default {
   props: {
     completedCount: Number,
     total: Number,
+    checkAllTodos: Function,
+    batchDelTodos: Function,
   },
+  methods: {
+    batchDel() {
+      if (window.confirm(`您确认要删除已完成待办事项码?`)) {
+        this.batchDelTodos();
+      }
+    },
+  },
+  computed: {
+    isCheckAll: {
+      get() {
+        return this.completedCount === this.total && this.total !== 0;
+      },
+      set(val) {
+        this.checkAllTodos(val);
+      },
+    },
+  },
+  
 };
 </script>
 
