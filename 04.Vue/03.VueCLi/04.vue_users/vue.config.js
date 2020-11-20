@@ -1,3 +1,4 @@
+const path = require("path");
 /*
   vue.config.js 修改vue脚手架的配置文件
     注意文件目录不能出错：项目根目录
@@ -30,6 +31,19 @@ module.exports = {
       //   // 重写请求地址
       //   pathRewrite: {'^/api' : ''}
       // }
+    }
+  },
+  // 当前配置会和vue的webpack合并
+  configureWebpack: {
+    resolve: {
+      alias: {
+        // 配置路径别名(可以简写路径)
+        "@views": path.resolve(__dirname, "src/views"),
+        "@assets": path.resolve(__dirname, "src/assets"),
+        "@comps": path.resolve(__dirname, "src/components"),
+        "@store": path.resolve(__dirname, "src/store"),
+        "@utils": path.resolve(__dirname, "src/utils"),
+      }
     }
   }
 };

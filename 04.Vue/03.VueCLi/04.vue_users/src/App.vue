@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Search from "./views/Search";
+import Search from "@views/Search";
 import List from "./views/List";
 
 export default {

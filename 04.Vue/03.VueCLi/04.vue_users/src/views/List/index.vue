@@ -32,7 +32,7 @@ export default {
       this.isLoading = true;
       // 发送请求
       axios
-        .get(`http://localhost:8080/search/users?q=${searchName}`)
+        .get(`/api/search/users?q=${searchName}`)
         // axios
         // .get(`https://api.github.com/search/users?q=${searchName}`)
         .then((res) => {
