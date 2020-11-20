@@ -2,6 +2,8 @@
   vue.config.js 修改vue脚手架的配置文件
     注意文件目录不能出错：项目根目录
   当你启动脚手架时，读取这个文件配置从而修改脚手架配置
+
+  https://cli.vuejs.org/zh/
 */
 module.exports = {
   devServer: {
@@ -18,11 +20,11 @@ module.exports = {
         并且转发请求到 target 地址（目标服务器地址）去
           http://localhost:3000/search/users
       */
-      '/api': {
-        target: 'http://localhost:3000',
+      "/api": {
+        target: "http://localhost:3000",
         // 重写请求地址
-        pathRewrite: {'^/api' : ''}
-      },
+        pathRewrite: { "^/api": "" }
+      }
       // '/v2/api': {
       //   target: 'http://localhost:3001',
       //   // 重写请求地址
