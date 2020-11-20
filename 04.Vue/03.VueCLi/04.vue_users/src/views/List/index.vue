@@ -31,9 +31,10 @@ export default {
       this.isFirstView = false;
       this.isLoading = true;
       // 发送请求
-      // axios.get(`http://localhost:3000/search/users?q=${searchName}`)
       axios
-        .get(`https://api.github.com/search/users?q=${searchName}`)
+        .get(`http://localhost:8080/search/users?q=${searchName}`)
+        // axios
+        // .get(`https://api.github.com/search/users?q=${searchName}`)
         .then((res) => {
           this.isLoading = false;
           // 开发时：请求回来的数据有很多，只需要其中的部分数据

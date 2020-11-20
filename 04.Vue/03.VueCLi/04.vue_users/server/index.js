@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.get("/search/users", (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
+  // res.set("Access-Control-Allow-Origin", "*");
 
   res.json({
     total_count: 772,
