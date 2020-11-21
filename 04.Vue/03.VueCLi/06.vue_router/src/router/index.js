@@ -31,8 +31,22 @@ const router = new VueRouter({
           component: Message,
           children: [
             {
+              // 加上name属性，就叫做命名路由
+              name: "Detail",
               path: "detail/:id", // 动态路由配置，能匹配多个路径
               component: Detail,
+              // props函数的返回值，会以props方式传递给组件
+              props(route) {
+                // console.log(route);
+                return {
+                  // 展开route.params数据，到对象上
+                  ...route.params,
+                  ...route.query,
+                  // id: route.params.id,
+                  // name: route.query.name,
+                  // age: route.query.age,
+                };
+              },
             },
           ],
         },

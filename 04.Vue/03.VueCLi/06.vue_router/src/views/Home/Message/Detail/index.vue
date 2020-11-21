@@ -9,6 +9,7 @@
 <script>
 export default {
   name: "Detail",
+  props: ["id", "name", "age"],
   data() {
     return {
       messages: [
@@ -18,6 +19,9 @@ export default {
       ],
       message: {},
     };
+  },
+  mounted() {
+    console.log(this);
   },
   watch: {
     $route: {

@@ -30,7 +30,7 @@
       </div>
       <div class="col-md-8">
         <!-- 显示对应的路由组件 -->
-        <router-view></router-view>
+        <router-view title="atguigu"></router-view>
       </div>
     </div>
   </div>
