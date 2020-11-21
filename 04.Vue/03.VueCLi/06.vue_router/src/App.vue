@@ -30,7 +30,10 @@
       </div>
       <div class="col-md-8">
         <!-- 显示对应的路由组件 -->
-        <router-view title="atguigu"></router-view>
+        <!-- <keep-alive include="Home,About"> -->
+        <keep-alive exclude="">
+          <router-view title="atguigu"></router-view>
+        </keep-alive>
       </div>
     </div>
   </div>

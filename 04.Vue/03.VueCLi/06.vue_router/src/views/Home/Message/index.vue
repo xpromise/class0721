@@ -97,8 +97,12 @@
           }"
           >{{ message.content }}</router-link
         >
+        <button @click="push(message.id)">push</button>
+        <button @click="replace(message.id)">replace</button>
       </li>
     </ul>
+    <button @click="$router.back()">goBack</button
+    ><button @click="$router.forward()">goFoward</button>
     <!-- 显示路由组件 -->
     <router-view></router-view>
   </div>
@@ -111,6 +115,33 @@ export default {
     return {
       messages: [],
     };
+  },
+  methods: {
+    push(id) {
+      /*
+        $route 
+          用来获取路由参数(params、query)和路由路径（path）
+        $router
+          用来编程式导航(push、replace、go、back、forward)
+
+        两种路由跳转的方式：
+          1. 路由链接导航
+            router-link
+          2. 编程式导航
+            this.$router.push/replace()
+
+            如果点击链接或者按钮只需要进行路由跳转，那么就用第一种方式
+              例子：导航链接
+            如果点击链接或者按钮需要做一些其他事，再进行路由跳转，那么就用第二种方式
+              例子：登录按钮、修改按钮
+      */
+      // 编程式导航
+      // console.log(this);
+      this.$router.push(`/home/message/detail/${id}?name=jack&age=18`);
+    },
+    replace(id) {
+      this.$router.replace(`/home/message/detail/${id}?name=jack&age=18`);
+    },
   },
   mounted() {
     setTimeout(() => {
