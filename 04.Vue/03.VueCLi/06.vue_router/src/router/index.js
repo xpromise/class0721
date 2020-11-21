@@ -6,6 +6,7 @@ import VueRouter from "vue-router";
 import About from "../views/About";
 import Home from "../views/Home";
 import Message from "../views/Home/Message";
+import Detail from "../views/Home/Message/Detail";
 import News from "../views/Home/News";
 
 // 安装插件
@@ -28,6 +29,12 @@ const router = new VueRouter({
         {
           path: "/home/message",
           component: Message,
+          children: [
+            {
+              path: "detail/:id", // 动态路由配置，能匹配多个路径
+              component: Detail,
+            },
+          ],
         },
         {
           path: "news", // 当你路径不是 / 开头，就会以父路由路径补全
