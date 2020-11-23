@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="test">尚硅谷IT教育</div>
+
+    <div id="demo">
+      <ul>
+        <li>test1</li>
+        <li>test2</li>
+        <li>test3</li>
+      </ul>
+    </div>
+
+    <!--
+1. [].slice.call(lis): 将伪数组转换为真数组
+2. node.nodeType: 得到节点类型
+3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+-->
+
+    <script type="text/javascript">
+      // 1. [].slice.call(lis): 将伪数组转换为真数组
+
+      const lis = document.querySelectorAll("li");
+      // console.log(lis);
+
+      // const arr1 = Array.from(lis); // ES6
+      // console.log(arr1);
+
+      // slice方法怎么知道要截取的的是哪个数组？
+      // 方法内部是通过this来决定哪个数组的
+      // console.log([1, 2, 3].slice());
+
+      // slice方法的this改成了lis
+      // slice方法就会截取lis
+      console.log([].slice.call(lis)); // ES5
+      console.log(Array.prototype.slice.call(lis));
+
+      // 2. node.nodeType: 得到节点类型
+      // console.dir(lis[0]);
+      /*
+        https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType
+
+        nodeType 1 元素节点
+        nodeType 3 文本节点
+      */
+      // 3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+      // 设置对象属性的元属性
+      const person = {
+        firstName: "li",
+        lastName: "peihua",
+      };
+
+      Object.defineProperty(person, "fullName", {
+        enumerable: true,
+        configurable: false,
+        get() {
+          // 当你读取fullname的值时触发：person.fullname
+          return this.firstName + " " + this.lastName;
+        },
+        set(newVal) {
+          // 当你设置fullname的值时触发： person.fullname = 'yan haijing'
+          // newVal就是设置的值：'yan haijing'
+          const [firstName, lastName] = newVal.split(" ");
+          this.firstName = firstName;
+          this.lastName = lastName;
+        },
+      });
+
+      console.log(person);
+
+      person.fullName = "yan haijing";
+
+      console.log(person);
+      // 4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+      // 5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+      // 6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+    </script>
+  </body>
+</html>
