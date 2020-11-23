@@ -1,17 +1,44 @@
 <template>
-  <li>
+  <li @mouseenter="isShow = true" @mouseleave="isShow = false">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isCompleted" />
       <span>{{ todo.task }}</span>
     </label>
-    <button class="btn btn-danger">删除</button>
+    <button class="btn btn-danger" v-show="isShow" @click="del">删除</button>
   </li>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import { UPDATE_TODO, DEL_TODO } from "../../store/mutation-types";
+
 export default {
   name: "TodoItem",
   props: ["todo"],
+  data() {
+    return {
+      isShow: false,
+    };
+  },
+  methods: {
+    ...mapMutations([UPDATE_TODO, DEL_TODO]),
+    del() {
+      if (window.confirm(`您确认要删除数据吗?`)) {
+        this[DEL_TODO](this.todo.id);
+      }
+    },
+  },
+  computed: {
+    isCompleted: {
+      get() {
+        return this.todo.isCompleted;
+      },
+      set() {
+        // 更新vuex的todos数据
+        this[UPDATE_TODO](this.todo.id);
+      },
+    },
+  },
 };
 </script>
 
