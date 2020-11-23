@@ -1,6 +1,9 @@
 <template>
   <div>
-    <p>clicked: {{ $store.state.count }} times, count is xxx</p>
+    <p>
+      clicked: {{ $store.state.count }} times, count is
+      {{ $store.getters.oddOrEven }}
+    </p>
     <select v-model="num">
       <option :value="1">1</option>
       <option :value="2">2</option>
@@ -29,15 +32,21 @@ export default {
     };
   },
   mounted() {
-    // console.log(this);
+    console.log(this.$store);
   },
   methods: {
     increment() {
       // 更新vuex数据 --> dispatch
-      this.$store.dispatch("increment", this.num);
+      // this.$store.dispatch("increment", this.num);
+
+      // 因为action函数啥也没做
+      // 直接调用mutation函数
+      this.$store.commit("INCREMENT", this.num);
     },
     decrement() {
-      this.$store.dispatch("decrement", this.num);
+      // this.$store.dispatch("decrement", this.num);
+      // 直接调用mutation函数
+      this.$store.commit("DECREMENT", this.num);
     },
     incrementIfOdd() {
       this.$store.dispatch("incrementIfOdd", this.num);

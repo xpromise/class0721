@@ -9,6 +9,20 @@ Vue.use(Vuex);
 const state = {
   // 数据的初始化
   count: 0,
+  // person: { name: "jack" },
+};
+
+/**
+ * 包含了只用来读取的计算数据
+ */
+const getters = {
+  oddOrEven(state) {
+    // Math.abs() 取绝对值（正数）
+    return Math.abs(state.count) % 2 === 1 ? "奇数" : "偶数";
+  },
+  // name(state) {
+  //   return state.person.name;
+  // },
 };
 
 /**
@@ -19,15 +33,15 @@ const state = {
 const actions = {
   // actions函数第一个参数是一个对象：store --> 内部有dispatch/commit/state等
   // actions函数第二个参数：外面调用dispatch传递过来的数据
-  increment(store, num) {
-    console.log(store, num);
-    // 触发某一个mutation函数
-    // store.commit(触发的mutation函数名称, mutation函数要接受的数据);
-    store.commit("INCREMENT", num);
-  },
-  decrement({ commit }, num) {
-    commit("DECREMENT", num);
-  },
+  // increment(store, num) {
+  //   // console.log(store, num);
+  //   // 触发某一个mutation函数
+  //   // store.commit(触发的mutation函数名称, mutation函数要接受的数据);
+  //   store.commit("INCREMENT", num);
+  // },
+  // decrement({ commit }, num) {
+  //   commit("DECREMENT", num);
+  // },
   incrementIfOdd({ commit, state: { count } }, num) {
     if (count % 2 === 1) {
       commit("INCREMENT", num);
@@ -59,6 +73,7 @@ const mutations = {
 // store对象中包含读取数据和更新数据的方法
 const store = new Vuex.Store({
   state,
+  getters,
   actions,
   mutations,
 });
