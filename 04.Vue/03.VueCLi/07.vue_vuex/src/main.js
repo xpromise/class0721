@@ -1,7 +1,10 @@
 // @ts-nocheck
 import Vue from "vue";
-import App from "./App.vue";
+import App from "./App";
+
 import store from "./store";
+// 引入公共样式
+import "./assets/css/common.css";
 
 Vue.config.productionTip = false;
 
