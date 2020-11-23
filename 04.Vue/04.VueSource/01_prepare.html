@@ -7,7 +7,7 @@
   <body>
     <div id="test">尚硅谷IT教育</div>
 
-    <div id="demo">
+    <div id="app">
       <ul>
         <li>test1</li>
         <li>test2</li>
@@ -16,13 +16,13 @@
     </div>
 
     <!--
-1. [].slice.call(lis): 将伪数组转换为真数组
-2. node.nodeType: 得到节点类型
-3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
-4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
-5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
-6. DocumentFragment: 文档碎片(高效批量更新多个节点)
--->
+      1. [].slice.call(lis): 将伪数组转换为真数组
+      2. node.nodeType: 得到节点类型
+      3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+      4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+      5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+      6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+      -->
 
     <script type="text/javascript">
       // 1. [].slice.call(lis): 将伪数组转换为真数组
@@ -79,8 +79,68 @@
 
       console.log(person);
       // 4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+      // Object.keys(obj) 不会遍历原型链
+      // Object.values(obj) 不会遍历原型链
+
       // 5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+
+      const obj = {
+        a: 1,
+      };
+      obj.__proto__.b = 2;
+
+      // console.log(Object.keys(obj));
+
+      // 会遍历原型链
+      for (const key in obj) {
+        // 判断属性是否是对象自身的属性（而不是原型链上的属性）
+        // if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          console.log(key);
+        }
+      }
+
+      console.log(obj.a, obj.b);
+
       // 6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+
+      // 1. 创建文档碎片节点
+      // 近似于document，只是操作它只会在内存中操作，并不会影响用户界面
+      const fragment = document.createDocumentFragment();
+
+      // 2. 将操作的真实DOM元素添加到文档碎片节点中
+      const app = document.getElementById("app");
+
+      // let children = app.children;
+      // [].slice.call(children).forEach((child) => {
+      //   fragment.appendChild(child);
+      // });
+
+      // let child = app.firstChild;
+      // while (child) {
+      //   // 一旦元素添加到fragment中，就会从DOM移除
+      //   fragment.appendChild(child);
+      //   child = app.firstChild;
+      // }
+
+      let child;
+      // 先赋值：child = app.firstChild
+      // 在判断 child 值是否存在
+      while ((child = app.firstChild)) {
+        // 一旦元素添加到fragment中，就会从DOM移除
+        fragment.appendChild(child);
+      }
+
+      console.dir(fragment);
+
+      // 3. 操作文档碎片节点，修改里面的值
+      const list = fragment.childNodes[1].children;
+      [].slice.call(list).forEach((li) => {
+        li.textContent = li.textContent + "~~~";
+      });
+
+      // 4. 将fragment节点添加到页面中生效
+      app.appendChild(fragment);
     </script>
   </body>
 </html>
