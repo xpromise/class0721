@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>04_模板解析_事件指令</title>
-</head>
-<body>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>04_模板解析_事件指令</title>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="handleClick">按钮</button>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      /*
+        事件指令
+      */
+      debugger;
+      new MVVM({
+        el: "#app",
+        data: {},
+        methods: {
+          handleClick() {
+            console.log("hello mvvm");
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
