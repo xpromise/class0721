@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>03_模板解析_表达式_vue</title>
-</head>
-<body>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>03_模板解析_表达式_vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{msg}}</p>
+      <p>{{person.name}}</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      /*
+        模板解析：如何解析插值语法
+      */
+      debugger;
+      new MVVM({
+        el: "#app",
+        data: {
+          msg: "hello mvvm",
+          person: {
+            name: "jack",
+          },
+        },
+      });
+    </script>
+  </body>
 </html>

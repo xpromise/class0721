@@ -34,7 +34,7 @@ MVVM.prototype = {
    * @param {String} key data中属性名
    */
   _proxy: function (key) {
-    // 缓存thiss
+    // 缓存this
     var me = this;
     // 通过Object.defineProperty方法给this添加新属性
     // 设置属性的元属性（定义属性的读取和设置的方法）

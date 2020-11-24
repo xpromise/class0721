@@ -55,9 +55,9 @@
 
 - 原理：
 
-1. 将 data 数据赋值给 data 变量和 this.\_data 属性
-2. 通过 Object.keys 方法变量 data 中所有属性，提取到所有属性名成为数组
-3. 遍历属性名数组，取出属性名，对属性名调用数据代理 \_proxy 方法
-4. 数据代理方法：通过 Object.defineProperty 给 this 添加属性名，值定义了 get 和 set 方法
-5. get 和 set 方法中都是对 this.\_data, 也就是原数据进行读写操作
-6. 所以将来就可以直接通过 this 访问到 data 中的数据，操作 this 上的数据，实际操作还是原 data 数据
+1. 将 `data` 数据赋值给 `data` 变量和 `this._data` 属性
+2. 通过 `Object.keys` 方法变量 `data` 中所有属性，提取到所有属性名成为数组
+3. 遍历属性名数组，取出属性名，对属性名调用数据代理 `_proxy` 方法
+4. 数据代理方法：通过 `Object.defineProperty` 给 `this` 添加属性名，值定义了 `get` 和 `set` 方法
+5. `get` 和 `set` 方法中都是对 `this._data`, 也就是原数据进行读写操作
+6. 所以将来就可以直接通过 `this` 访问到 `data` 中的数据，操作 `this` 上的数据，实际操作还是原 `data` 数据
