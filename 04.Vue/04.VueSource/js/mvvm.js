@@ -11,7 +11,6 @@ function MVVM(options) {
   var me = this;
 
   // 数据代理最终结果：可以通过this直接访问（读、写）data中的数据
-
   // 1. Object.keys(data) 提取对象所有属性名成为数组
   // 2. 对数组进行遍历，提取每一个属性名，对属性名进行数据代理
   Object.keys(data).forEach(function (key) {
@@ -19,6 +18,7 @@ function MVVM(options) {
     me._proxy(key);
   });
 
+  // 数据劫持：重新定义原data数据中的属性，将其定义成响应式属性
   observe(data, this);
 
   // 模板解析：解析页面中的插值语法和指令语法
