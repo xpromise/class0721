@@ -21,6 +21,7 @@ function MVVM(options) {
 
   observe(data, this);
 
+  // 模板解析：解析页面中的插值语法和指令语法
   this.$compile = new Compile(options.el || document.body, this);
 }
 
