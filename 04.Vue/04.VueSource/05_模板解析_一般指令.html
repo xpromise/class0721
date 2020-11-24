@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>05_模板解析_一般指令</title>
-</head>
-<body>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>05_模板解析_一般指令</title>
+    <style>
+      .red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <p v-text="msg"></p>
+      <p v-html="msg"></p>
+      <p class="aaa" v-class="className">{{msg}}</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      /*
+        模板解析：
+          1. 将el所有子节点添加文档碎片节点中
+          2. 解析文档碎片节点的插值语法和指令语法
+            1. 取出所有子节点，进行遍历
+            2. 判断子节点是否是元素节点
+              如果是元素节点，那么就要解析指令
+                取出当前节点所有属性节点，进行遍历，判断属性名是否v-开头（是否是指令属性）
+                  如果是，还要判断属性是否是事件指令（on开头）
+                    如果是，是事件指令，最终给元素绑定事件，且通过bind方法将事件回调函数的this改为vm
+                    如果不是，是普通指令（v-text、v-html）
+                      最终会调用相应更新数据的updator方法更新DOM元素内容
+                        比如：v-text --> node.textContent = 'xxx'
+                        比如：v-html --> node.innerHTML = 'xxx'
+                      处理完成的指令属性，会被移除掉   
+                  如果不是，那就看下一个属性
+              如果不是元素节点，要判断是否文本节点且里面文本内容是否有插值语法
+                最终和v-text指令解析是类似，会设置node.textContent属性，为表达式的值
+              如果都没有，就会看当前子节点是否还有子节点，接着进行递归调用，对子节点的子节点在进行处理
+                这一步是为了确保所有元素、节点都能被解析到
+          3. 将解析后文档碎片节点添加到el中生效
+      */
+      debugger;
+      new MVVM({
+        el: "#app",
+        data: {
+          msg: "<span>hello mvvm</span>",
+          className: "red",
+        },
+      });
+    </script>
+  </body>
 </html>

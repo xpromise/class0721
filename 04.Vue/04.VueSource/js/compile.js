@@ -59,6 +59,7 @@ Compile.prototype = {
 
       // 判断子节点是否是元素节点
       if (me.isElementNode(node)) {
+        // 解析指令语法
         me.compile(node);
         // 再判断子节点是否文本节点
         // 如果是，再判断节点的文本内容是否包含插值语法
@@ -79,22 +80,31 @@ Compile.prototype = {
   },
 
   compile: function (node) {
+    // 取出元素所有属性节点
     var nodeAttrs = node.attributes,
       me = this;
 
+    // 遍历属性节点
     [].slice.call(nodeAttrs).forEach(function (attr) {
+      // 得到属性名 v-on:click
       var attrName = attr.name;
+      // 判断属性是否是指令属性（v-）
       if (me.isDirective(attrName)) {
+        // 得到属性值 - 表达式
         var exp = attr.value;
+        // 截取得到指令属性 on:click
         var dir = attrName.substring(2);
-        // 事件指令
+        // 判断指令属性是否是事件指令（on）
         if (me.isEventDirective(dir)) {
+          // 事件指令 v-on
           compileUtil.eventHandler(node, me.$vm, exp, dir);
-          // 普通指令
         } else {
+          // 普通指令 v-text v-html v-class v-model
+          // 每个指令都会调用相应的方法去解析
           compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
         }
 
+        // 当指令属性处理完成，会将指令属性移除掉
         node.removeAttribute(attrName);
       }
     });
@@ -123,7 +133,7 @@ Compile.prototype = {
   },
 };
 
-// 指令处理集合
+// 指令处理集合：专门用来处理指令的
 var compileUtil = {
   // node 当前遍历的元素
   // vm   MVVM的实例
@@ -156,6 +166,7 @@ var compileUtil = {
     this.bind(node, vm, exp, "class");
   },
 
+  // 除了事件指令以外，其他指令都会来到这个方法去更新DOM元素
   // node 当前遍历的元素
   // vm   MVVM的实例
   // exp  表达式
@@ -174,12 +185,23 @@ var compileUtil = {
     });
   },
 
-  // 事件处理
+  /**
+   * 事件处理
+   * @param {*} node 元素
+   * @param {*} vm 实例
+   * @param {*} exp 指令表达式
+   * @param {*} dir 指令
+   */
   eventHandler: function (node, vm, exp, dir) {
+    // 获取事件类型 click
     var eventType = dir.split(":")[1],
+      // 从methods中取出事件回调函数
       fn = vm.$options.methods && vm.$options.methods[exp];
 
     if (eventType && fn) {
+      // 给node绑定事件和回调函数
+      // 回调函数通过bind方法强制绑定了this指向vm
+      // 所以事件回调函数的this是vm
       node.addEventListener(eventType, fn.bind(vm), false);
     }
   },
@@ -228,6 +250,7 @@ var compileUtil = {
   },
 };
 
+// 专门用来更新DOM元素的方法对象
 var updater = {
   /**
    * 更新插值语法的内容
@@ -245,11 +268,17 @@ var updater = {
   },
 
   classUpdater: function (node, value, oldValue) {
+    // 取出元素原有的类名
     var className = node.className;
+    // 将旧的类名处理
     className = className.replace(oldValue, "").replace(/\s$/, "");
 
+    // 根据是否有原来的类名来决定是否要添加空格
     var space = className && String(value) ? " " : "";
 
+    // 给元素设置类名
+    // 如果之前存在类名：aaa  --> aaa red
+    // 如果之前没有类名：red
     node.className = className + space + value;
   },
 
