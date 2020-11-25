@@ -36,7 +36,9 @@ Observer.prototype = {
       enumerable: true, // 可枚举
       configurable: false, // 不能再define
       get: function () {
+        // Dep.target有值 --> 为Watcher的实例
         if (Dep.target) {
+          // 建立响应式的方法
           dep.depend();
         }
         // 返回之前的值
@@ -69,19 +71,28 @@ function observe(value, vm) {
   return new Observer(value);
 }
 
-var uid = 0;
+
+// 以下代码就是dep相关的
+var uid = 0; // unique_id
 
 function Dep() {
   this.id = uid++;
+  // 存储watcher的容器
   this.subs = [];
 }
 
 Dep.prototype = {
+  // 添加watcher
   addSub: function (sub) {
     this.subs.push(sub);
   },
+  // addSub: function (watcher) {
+  //   this.subs.push(watcher);
+  // },
 
   depend: function () {
+    // Dep.target --> Watcher实例
+    // this --> Dep实例
     Dep.target.addDep(this);
   },
 
