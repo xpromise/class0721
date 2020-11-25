@@ -147,16 +147,20 @@ var compileUtil = {
   },
 
   model: function (node, vm, exp) {
+    // 最终：会给元素设置value
+    // 数据 Model --> View
     this.bind(node, vm, exp, "model");
 
     var me = this,
-      val = this._getVMVal(vm, exp);
+      val = this._getVMVal(vm, exp); // 获取表达式的值
+
+    // 数据 View --> Model
     node.addEventListener("input", function (e) {
       var newValue = e.target.value;
       if (val === newValue) {
         return;
       }
-
+      // 设置表达式的值（修改响应式数据的值）
       me._setVMVal(vm, exp, newValue);
       val = newValue;
     });
@@ -238,12 +242,17 @@ var compileUtil = {
 
   _setVMVal: function (vm, exp, value) {
     var val = vm._data;
+    // ['person', 'name']
     exp = exp.split(".");
     exp.forEach(function (k, i) {
-      // 非最后一个key，更新val的值
+      // 第一次遍历 person 下标 0
+      // 第二次遍历 name 下标 1
+      // exp.length - 1 = 1
       if (i < exp.length - 1) {
+        // data['person']
         val = val[k];
       } else {
+        // person[name] = value 设置响应式的值
         val[k] = value;
       }
     });

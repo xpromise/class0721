@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>07_数据双向绑定</title>
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>07_数据双向绑定</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="msg" />
+      <!-- <input type="text" :value="msg" @input="handleInput" /> -->
+      <p>{{msg}}</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      /*
+        双向数据绑定原理 v-model：
+          给元素绑定value和input事件，
+            绑定value属性，数据由Model-->View
+            绑定input事件，就能收集到页面输入的数据，从而修改响应式数据View-->Model
+      */
+      new MVVM({
+        el: "#app",
+        data: {
+          msg: "hello",
+        },
+        // methods: {
+        //   handleInput(event) {
+        //     this.msg = event.target.value;
+        //   },
+        // },
+      });
+    </script>
+  </body>
 </html>
