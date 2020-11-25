@@ -21,7 +21,6 @@
       /*
         响应式：当你更新数据时，数据变，页面也变
       */
-      debugger;
       new MVVM({
         el: "#app",
         data: {
@@ -29,6 +28,7 @@
         },
         methods: {
           update() {
+            debugger;
             this.num += 1;
           },
         },

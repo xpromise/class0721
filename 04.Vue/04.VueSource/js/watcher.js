@@ -46,10 +46,59 @@ Watcher.prototype = {
 
     /*
        1. 为什么dep中要保存watcher
+          响应式数据都有自己的dep，
+          更新用户界面的方法在watcher.cb --> updaterFn 用来更新用户界面
+
+          要达到响应式，更新数据的数据，数据要变化，同时用户界面也要发生变化
+            响应式数据 --> dep --> watcher --> wacher.cb更新用户界面
+
+          dep保存了watcher，将来才能找到watcher，从而去更新用户界面  
+
        2. 为什么watcher中要保存dep
+          目的：为了防止dep重复保存相同的watcher
+
+          为什么能做到：因为每次dep和watcher都是互相保存的，
+            只要watcher中存在当前dep，也就意味着dep也保存了watcher
+            只需要判断watcher有无当前dep就能知道dep有无当前watcher
+            从而不要重复保存
+
        3. dep保存watcher的容器为什么设计成数组（subs）
+          为了方便遍历使用
+
        4. watcher保存dep的容器为什么设计成对象（depIds）
+          对象查找数据比数组更快
+
        5. 响应式是如何建立的？
+          new Watcher --> this.get() --> this.getVMVal() --> 读取data中的数据 
+            --> 触发数据劫持的get --> dep.depend() --> watcher.addDep(dep)
+              --> watcher中保存dep dep中保存watcher
+          
+          将来更新数据的时候，触发数据代理set，触发数据劫持set，更新数据，同时调用
+          dep.notify方法，通知保存的所有的watcher去更新用户界面
+
+       <div id="app">
+        // 除了事件指令以外的其他指令语法和插值语法都会产生自己watcher
+        <p v-text="msg"></p> // watcher0
+        <p v-html="msg"></p> // watcher1
+        <p>{{person.name}}</p> // watcher2 --> dep2 dep3
+        <p>{{count}}</p> // watcher3
+        <p>hello mvvm</p> 
+        <button v-on:click="handleClick">按钮</button>
+       </div>  
+
+       {
+         el: '#app'
+         data: {
+           // 所有响应式数据都会产生dep
+           // 一共会产生四个dep
+           msg: 'hello', // dep0 --> watcher0 watcher1
+           count: 0, // dep1 --> watcher3
+           person: { // dep2 --> watcher2
+             name: 'jack' // dep3 --> watcher2
+           }
+         },
+         methods: { handleClick() { this.count++; } }
+       }
     */
 
     // this指向Watcher的实例

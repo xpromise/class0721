@@ -10,7 +10,7 @@ Observer.prototype = {
     Object.keys(data).forEach(function (key) {
       // me.convert(key, data[key]);
       // 提取所有属性名，定义成响应式数据
-      me.defineReactive(this.data, key, data[key]);
+      me.defineReactive(me.data, key, data[key]);
     });
   },
   // convert: function(key, val) {
@@ -38,7 +38,8 @@ Observer.prototype = {
       get: function () {
         // Dep.target有值 --> 为Watcher的实例
         if (Dep.target) {
-          // 建立响应式的方法
+          // 建立响应式联系的方法
+          // dep会保存watcher watcher会保存dep
           dep.depend();
         }
         // 返回之前的值
@@ -70,7 +71,6 @@ function observe(value, vm) {
   // 如果是普通对象或数组就会开始定义响应式
   return new Observer(value);
 }
-
 
 // 以下代码就是dep相关的
 var uid = 0; // unique_id
