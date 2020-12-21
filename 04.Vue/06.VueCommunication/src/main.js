@@ -9,6 +9,9 @@ import "./plugins/element";
 Vue.config.productionTip = false;
 
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   router,
   store,
   render: h => h(App)
