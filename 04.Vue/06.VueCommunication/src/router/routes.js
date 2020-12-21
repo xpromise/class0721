@@ -3,6 +3,9 @@ const Props = () => import("../views/Props");
 const MyEvents = () => import("../views/MyEvents");
 const GlobolEventsBus = () => import("../views/GlobolEventsBus");
 const Vmodel = () => import("../views/Vmodel");
+const Sync = () => import("../views/Sync");
+const AttrsAndListeners = () => import("../views/AttrsAndListeners");
+const ChildrenAndParent = () => import("../views/ChildrenAndParent");
 
 const routes = [
   {
@@ -29,6 +32,21 @@ const routes = [
     path: "/vmodel",
     name: "vmodel",
     component: Vmodel
+  },
+  {
+    path: "/sync",
+    name: "sync",
+    component: Sync
+  },
+  {
+    path: "/attrsandlisteners",
+    name: "attrsAndListeners",
+    component: AttrsAndListeners
+  },
+  {
+    path: "/childrenandparent",
+    name: "ChildrenAndParent",
+    component: ChildrenAndParent
   }
 ];
 
